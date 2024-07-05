@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class GameConsts : MonoBehaviour
+public static class Consts
 {
-    
+    public static readonly int pixelsPerUnit = 32;
 }
