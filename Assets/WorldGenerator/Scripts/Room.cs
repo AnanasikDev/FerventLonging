@@ -29,10 +29,11 @@ public class Room : MonoBehaviour
         return i == 0;
     }
 
-    public int CalculateNeighbours(Room other, out List<Vector2> positions, out List<RoomEntrance> thisEntrances)
+    public int CalculateNeighbours(Room other, out List<Vector2> positions, out List<RoomEntrance> thisEntrances, out List<RoomEntrance> otherEntrances)
     {
         positions = new List<Vector2>();
         thisEntrances = new List<RoomEntrance>();
+        otherEntrances = new List<RoomEntrance>();
 
         var randomEntrances = this.entrances.OrderBy(x => Random.value).ToList();
 
@@ -47,23 +48,35 @@ public class Room : MonoBehaviour
                 reference.transform.position = (transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition;
                 reference.gameObject.SetActive(true);
                 bool free = isSpaceFree(reference.shapeObject);
-                //reference.gameObject.SetActive(false);
+                reference.gameObject.SetActive(false);
 
                 if (!free) continue;
 
                 positions.Add((transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition);
                 thisEntrances.Add(entrance);
+                otherEntrances.Add(otherEntrance);
             }
         }
 
         return positions.Count;
     }
 
+    public void UpdateEntrances(RoomEntrance[] toUpdate)
+    {
+        for (int i = 0; i < toUpdate.Length; i++)
+        {
+            var e = entrances.Find(e => e.localPosition == toUpdate[i].localPosition);
+            if (e == null) continue;
+
+            e = toUpdate[i];
+        }
+    }
+
     private void OnDrawGizmos()
     {
         foreach (var entrance in entrances)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = entrance.isConnected ? Color.yellow : Color.red;
             //Gizmos.DrawCube(transform.position + entry.localPosition.ConvertTo3D(), entry.width / 2f * Vector3.one);
             Gizmos.DrawWireCube(transform.position + entrance.localPosition.ConvertTo3D(), entrance.width * Vector3.one);
         }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class RoomsGenerator : MonoBehaviour
 {
     [SerializeField] private List<Room> roomPrefabs;
-    [SerializeField] private int numberOfRooms = 10;
+    [SerializeField] private int numberOfRooms = 40;
     
     [ReadOnly] public List<Room> generatedRooms = new List<Room>();
 
@@ -50,15 +50,20 @@ public class RoomsGenerator : MonoBehaviour
 
             foreach (var otherRoom in randomRooms)
             {
-                int neighbours = room.CalculateNeighbours(otherRoom, out List<Vector2> positions, out List<RoomEntrance> entrances);
-                if (neighbours > 0)
+                int neighbours = room.CalculateNeighbours(otherRoom, out List<Vector2> positions, out List<RoomEntrance> thisEntrances, out List<RoomEntrance> otherEntrances);
+                
+                if (neighbours == 0) continue;
+
+                for (int i = 0; i < neighbours; i++)
                 {
-                    for (int i = 0; i < neighbours; i++)
-                    {
-                        var newRoom = Instantiate(otherRoom, positions[i].ConvertTo3D(), Quaternion.identity);
-                        queue.Enqueue(newRoom);
-                        generatedNumber++;
-                    }
+                    var newRoom = Instantiate(otherRoom, positions[i].ConvertTo3D(), Quaternion.identity);
+                    thisEntrances[i].isConnected = true;
+                    otherEntrances[i].isConnected = true;
+                    newRoom.UpdateEntrances(otherEntrances.ToArray());
+                    room.UpdateEntrances(thisEntrances.ToArray());
+                    
+                    queue.Enqueue(newRoom);
+                    generatedNumber++;
                 }
             }
         }
