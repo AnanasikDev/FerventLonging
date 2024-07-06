@@ -42,9 +42,4 @@ public class PlayerBehavior : MonoBehaviour
         // Update timer
         warmthLossTimer += Time.deltaTime;
     }
-
-    private void FixedUpdate()
-    {
-        
-    }
 }
