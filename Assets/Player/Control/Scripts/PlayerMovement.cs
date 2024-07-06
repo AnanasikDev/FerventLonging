@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float speed;
+    private float h;
+    private float v;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +18,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
     }
 
     private void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
         Vector2 translation = new Vector2(h, v) * speed;
         gameObject.transform.position = gameObject.transform.position.ConvertTo2D() + translation;
     }
