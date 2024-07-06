@@ -346,20 +346,17 @@ MonoBehaviour:
   - localPosition: {x: 1.5, y: 0.25}
     width: 0.5
     outDirection: {x: 1, y: 0}
-    isConnected: 0
   - localPosition: {x: 0, y: 1.5}
     width: 1
     outDirection: {x: 0, y: 1}
-    isConnected: 0
   - localPosition: {x: -0.5, y: -1.5}
     width: 1
     outDirection: {x: 0, y: -1}
-    isConnected: 0
   - localPosition: {x: -1.5, y: -0.25}
     width: 0.5
     outDirection: {x: -1, y: 0}
-    isConnected: 0
-  shapeObject: {fileID: 6969808415731620928}
+  boundaries: {fileID: 2275286218105673326}
+  id: 0
 --- !u!212 &4392701661608009724
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -421,7 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1007621497001379590}
-  - component: {fileID: 6969808415731620928}
+  - component: {fileID: 2275286218105673326}
   m_Layer: 3
   m_Name: shape
   m_TagString: Untagged
@@ -444,8 +441,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1441440133381290424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &6969808415731620928
-PolygonCollider2D:
+--- !u!61 &2275286218105673326
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -473,7 +470,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -486,10 +483,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.4688027, y: 1.453204}
-      - {x: -1.4480047, y: 1.463603}
-      - {x: -1.4740026, y: -1.4740025}
-      - {x: 1.453204, y: -1.4636034}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0

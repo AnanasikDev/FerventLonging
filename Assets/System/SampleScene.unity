@@ -291,9 +291,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefabs:
-  - {fileID: 7770108679585161348, guid: 2dea0a96e666c684f83cfe7cc517fdf2, type: 3}
-  - {fileID: 7285460606436663877, guid: 417d395ad7810f648a703a462b346bc3, type: 3}
-  numberOfRooms: 20
+  - {fileID: 5699402418850133331, guid: 9afc6711c39965d49b6d9b63ce220e62, type: 3}
+  - {fileID: 7005097465687824348, guid: e20120490e41daf4099772bd9ed2e017, type: 3}
+  - {fileID: 3745517245880727900, guid: 5d8d3db1299f8944bbf89de29a6ae6d8, type: 3}
+  - {fileID: 7820584686063173852, guid: 7951be8d22ade1742ba2336f260d9988, type: 3}
+  numberOfRooms: 8
   generatedRooms: []
 --- !u!4 &1196553500
 Transform:

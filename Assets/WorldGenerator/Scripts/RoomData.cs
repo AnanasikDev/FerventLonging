@@ -16,5 +16,5 @@ public class RoomEntrance
     public Vector2 localPosition;
     public float width;
     public Vector2 outDirection;
-    public bool isConnected = false;
+    public RoomEntrance connectedEntrance;
 }

@@ -84,4 +84,6 @@ public static class Utils
 
     public static List<T> Shuffle<T>(this List<T> list) => list.OrderBy(_ => Random.value).ToList();
     public static T[] Shuffle<T>(this T[] array) => array.OrderBy(_ => Random.value).ToArray();
+
+    public static bool IsInsideBounds(this Vector2 position, Bounds bounds) => position.x > bounds.min.x && position.x < bounds.max.x && position.y > bounds.min.y && position.y < bounds.max.y;
 }

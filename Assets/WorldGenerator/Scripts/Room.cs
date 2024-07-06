@@ -8,15 +8,18 @@ public class Room : MonoBehaviour
 
     public List<RoomEntrance> entrances;
 
-    public PolygonCollider2D shapeObject;
+    public Collider2D boundaries;
+
+    public int id;
 
     private void OnDrawGizmos()
     {
         foreach (var entrance in entrances)
         {
-            Gizmos.color = entrance.isConnected ? Color.yellow : Color.red;
+            Gizmos.color = entrance.connectedEntrance != null ? Color.yellow : Color.red;
 
             Gizmos.DrawWireCube(transform.position + entrance.localPosition.ConvertTo3D(), entrance.width * Vector3.one);
+            Gizmos.DrawLine(transform.position + entrance.localPosition.ConvertTo3D(), transform.position + entrance.localPosition.ConvertTo3D() + entrance.outDirection.ConvertTo3D());
         }
     }
 }
