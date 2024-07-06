@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class RoomsGenerator : MonoBehaviour
@@ -46,26 +47,47 @@ public class RoomsGenerator : MonoBehaviour
 
             var room = queue.Dequeue();
 
-            var randomRooms = roomPrefabs.OrderBy(x => Random.value).ToArray();
+            var randomRooms = roomPrefabs.Shuffle();
 
             foreach (var otherRoom in randomRooms)
             {
-                int neighbours = room.CalculateNeighbours(otherRoom, out List<Vector2> positions, out List<RoomEntrance> thisEntrances, out List<RoomEntrance> otherEntrances);
-                
-                if (neighbours == 0) continue;
-
-                for (int i = 0; i < neighbours; i++)
+                var newRooms = GenerateNeighbours(room, otherRoom);
+                foreach (var newRoom in newRooms)
                 {
-                    var newRoom = Instantiate(otherRoom, positions[i].ConvertTo3D(), Quaternion.identity);
-                    thisEntrances[i].isConnected = true;
-                    otherEntrances[i].isConnected = true;
-                    newRoom.UpdateEntrances(otherEntrances.ToArray());
-                    room.UpdateEntrances(thisEntrances.ToArray());
-                    
                     queue.Enqueue(newRoom);
                     generatedNumber++;
                 }
             }
         }
+    }
+
+    private List<Room> GenerateNeighbours(Room parent, Room other)
+    {
+        List<Room> added = new List<Room>();
+
+        int neighbours = parent.CalculateNeighbours(other, out List<Vector2> positions, out List<RoomEntrance> thisEntrances, out List<RoomEntrance> otherEntrances);
+
+        if (neighbours == 0) return added;
+
+        for (int i = 0; i < neighbours; i++)
+        {
+            var newRoom = Instantiate(other, positions[i].ConvertTo3D(), Quaternion.identity);
+            for (int e = 0; e < otherEntrances.Count; e++)
+            {
+                if (newRoom.entrances[e].localPosition == otherEntrances[e].localPosition)
+                {
+                    newRoom.entrances[e].isConnected = true;
+                }
+            }
+
+            thisEntrances[i].isConnected = true;
+            otherEntrances[i].isConnected = true;
+            //newRoom.UpdateEntrances(otherEntrances.ToArray());
+            //room.UpdateEntrances(thisEntrances.ToArray());
+
+            added.Add(newRoom);
+        }
+
+        return added;
     }
 }

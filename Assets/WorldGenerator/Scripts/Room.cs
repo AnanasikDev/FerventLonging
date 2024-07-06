@@ -14,8 +14,10 @@ public class Room : MonoBehaviour
     public PolygonCollider2D shapeObject;
     public static readonly int roomsLayerIndex = 3;
 
-    private bool isSpaceFree(PolygonCollider2D collider)
+    private bool isSpaceFree(PolygonCollider2D collider, Vector2 position)
     {
+        collider.gameObject.SetActive(true);
+        collider.transform.position = position;
         ContactFilter2D contactFilter = new ContactFilter2D();
         contactFilter.useTriggers = true;
         contactFilter.layerMask = 1 << roomsLayerIndex;
@@ -23,19 +25,30 @@ public class Room : MonoBehaviour
         List<Collider2D> results = new List<Collider2D>();
 
         int i = collider.OverlapCollider(contactFilter, results);
+        collider.gameObject.SetActive(false);
 
         Debug.Log(i);
 
         return i == 0;
     }
 
+    /// <summary>
+    /// Calculates positions where the given room could be
+    /// connected to this room. Checks all entrances to find
+    /// all matches
+    /// </summary>
+    /// <param name="other">Target room to be put</param>
+    /// <param name="positions">Returns all positions where the target room could be placed</param>
+    /// <param name="thisEntrances"></param>
+    /// <param name="otherEntrances"></param>
+    /// <returns></returns>
     public int CalculateNeighbours(Room other, out List<Vector2> positions, out List<RoomEntrance> thisEntrances, out List<RoomEntrance> otherEntrances)
     {
         positions = new List<Vector2>();
         thisEntrances = new List<RoomEntrance>();
         otherEntrances = new List<RoomEntrance>();
 
-        var randomEntrances = this.entrances.OrderBy(x => Random.value).ToList();
+        var randomEntrances = this.entrances.Shuffle();
 
         foreach (var entrance in randomEntrances)
         {
@@ -45,10 +58,8 @@ public class Room : MonoBehaviour
                 if (otherEntrance.width != entrance.width) continue;
 
                 var reference = Scripts.RoomsGenerator.prefabToReference[other];
-                reference.transform.position = (transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition;
-                reference.gameObject.SetActive(true);
-                bool free = isSpaceFree(reference.shapeObject);
-                reference.gameObject.SetActive(false);
+
+                bool free = isSpaceFree(reference.shapeObject, (transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition);
 
                 if (!free) continue;
 

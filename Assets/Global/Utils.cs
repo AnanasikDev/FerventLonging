@@ -1,4 +1,6 @@
-﻿﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class Utils
 {
@@ -79,4 +81,7 @@ public static class Utils
     {
         return new Vector2Int(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
+
+    public static List<T> Shuffle<T>(this List<T> list) => list.OrderBy(_ => Random.value).ToList();
+    public static T[] Shuffle<T>(this T[] array) => array.OrderBy(_ => Random.value).ToArray();
 }
