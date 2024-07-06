@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    public int prefabId;
+
     [Tooltip("Sprites of rooms with same behaviour but different appearance")]
     public Sprite[] randomSprites;
 

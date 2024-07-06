@@ -13,14 +13,10 @@ public class RoomsGenerator : MonoBehaviour
     [ShowNonSerializedField][ReadOnly]
     private int generatedAmount = 0;
 
+    [Tooltip("If true, children must be different from the parent")][SerializeField] 
+    private bool doNotRepeateParent = true;
+
     [ReadOnly] public List<Room> generatedRooms = new List<Room>();
-
-    public static readonly int roomsLayerIndex = 3;
-
-
-    public bool intersect = false;
-    public Room r1;
-    public Room r2;
 
     /// <summary>
     /// A dictionary holding prefab rooms as keys
@@ -40,22 +36,9 @@ public class RoomsGenerator : MonoBehaviour
             prefabToReference.Add(room, reference);
         }
 
-        //Instantiate(roomPrefabs[0]);
-        //Debug.Log(IsSpaceFree(prefabToReference[roomPrefabs[1]].shapeObject, Vector2.zero, 0));
-
-
-
         Generate();
 
         CalculateConnections();
-    }
-
-    private void Update()
-    {
-        if (r1 == null || r2 == null) return;
-        Debug.Log("Internal: " + r1.bounds.Intersects(r2.bounds));
-        intersect = DoBoundsIntersect(r1.bounds, r2.bounds);
-        Debug.Log("Custom: " + intersect);
     }
 
     public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
@@ -129,12 +112,12 @@ public class RoomsGenerator : MonoBehaviour
         {
             foreach (RoomEntrance otherEntrance in other.entrances)
             {
+                if (doNotRepeateParent && parent.prefabId == other.prefabId) continue; 
+
                 if (otherEntrance.outDirection != -entrance.outDirection) continue;
                 if (otherEntrance.width != entrance.width) continue;
 
                 var reference = Scripts.RoomsGenerator.prefabToReference[other];
-
-                //Debug.Log(entrance.localPosition.ToString() + "  /  " + otherEntrance.localPosition);
 
                 Vector2 position = (parent.transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition;
 
@@ -145,8 +128,6 @@ public class RoomsGenerator : MonoBehaviour
                 Room newRoom = Instantiate(other);
                 newRoom.transform.position = position;
                 newRoom.id = generatedAmount;
-                //newRoom.entrances.Find(e => e.localPosition == otherEntrance.localPosition).isConnected = true;
-                //entrance.connectedEntrance = true;
 
                 return newRoom;
             }
@@ -161,9 +142,6 @@ public class RoomsGenerator : MonoBehaviour
 
         foreach (var room in generatedRooms)
         {
-            //if (room == referenceRoom) continue;
-
-            //if (room.boundaries.bounds.Intersects(referenceRoom.boundaries.bounds)) return false;
             if (DoBoundsIntersect(room.bounds, referenceRoom.bounds)) return false;
         }
         return true;

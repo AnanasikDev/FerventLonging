@@ -295,11 +295,11 @@ MonoBehaviour:
   - {fileID: 7005097465687824348, guid: e20120490e41daf4099772bd9ed2e017, type: 3}
   - {fileID: 3745517245880727900, guid: 5d8d3db1299f8944bbf89de29a6ae6d8, type: 3}
   - {fileID: 7820584686063173852, guid: 7951be8d22ade1742ba2336f260d9988, type: 3}
-  numberOfRooms: 50
+  - {fileID: 4824762023903311955, guid: c46734b2300c7e9449db625e5e90a580, type: 3}
+  - {fileID: 96454139741121628, guid: 25b8c34d8304fbe49bfb23cc47355f0f, type: 3}
+  - {fileID: 4255132422439712875, guid: 6789cec4b5f7f084dadab33c5a35e96c, type: 3}
+  numberOfRooms: 100
   generatedRooms: []
-  intersect: 0
-  r1: {fileID: 0}
-  r2: {fileID: 0}
 --- !u!4 &1196553500
 Transform:
   m_ObjectHideFlags: 0
