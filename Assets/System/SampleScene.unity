@@ -293,7 +293,7 @@ MonoBehaviour:
   roomPrefabs:
   - {fileID: 7770108679585161348, guid: 2dea0a96e666c684f83cfe7cc517fdf2, type: 3}
   - {fileID: 7285460606436663877, guid: 417d395ad7810f648a703a462b346bc3, type: 3}
-  numberOfRooms: 10
+  numberOfRooms: 20
   generatedRooms: []
 --- !u!4 &1196553500
 Transform:

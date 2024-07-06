@@ -1,8 +1,5 @@
 using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class RoomsGenerator : MonoBehaviour
@@ -11,6 +8,8 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] private int numberOfRooms = 40;
     
     [ReadOnly] public List<Room> generatedRooms = new List<Room>();
+
+    public static readonly int roomsLayerIndex = 3;
 
     /// <summary>
     /// A dictionary holding prefab rooms as keys
@@ -37,57 +36,90 @@ public class RoomsGenerator : MonoBehaviour
         var first = Instantiate(roomPrefabs[Random.Range(0, roomPrefabs.Count)], Vector2.zero, Quaternion.identity);
         queue.Enqueue(first);
 
-        int generatedNumber = 1;
+        int number = 1;
 
         while (true)
         {
-            if (generatedNumber >= numberOfRooms) break;
+            if (number >= numberOfRooms) break;
 
             if (queue.Count == 0) break;
 
             var room = queue.Dequeue();
 
-            var randomRooms = roomPrefabs.Shuffle();
-
-            foreach (var otherRoom in randomRooms)
+            var newRooms = GenerateNeighbours(room);
+            foreach (var newRoom in newRooms)
             {
-                var newRooms = GenerateNeighbours(room, otherRoom);
-                foreach (var newRoom in newRooms)
-                {
-                    queue.Enqueue(newRoom);
-                    generatedNumber++;
-                }
+                number++;
+                queue.Enqueue(newRoom);
             }
         }
     }
 
-    private List<Room> GenerateNeighbours(Room parent, Room other)
+    private List<Room> GenerateNeighbours(Room parent)
     {
-        List<Room> added = new List<Room>();
+        List<Room> result = new List<Room>();
 
-        int neighbours = parent.CalculateNeighbours(other, out List<Vector2> positions, out List<RoomEntrance> thisEntrances, out List<RoomEntrance> otherEntrances);
-
-        if (neighbours == 0) return added;
-
-        for (int i = 0; i < neighbours; i++)
+        foreach (RoomEntrance entrance in parent.entrances)
         {
-            var newRoom = Instantiate(other, positions[i].ConvertTo3D(), Quaternion.identity);
-            for (int e = 0; e < otherEntrances.Count; e++)
+            var newRoom = GenerateForEntrance(entrance, parent);
+            if (newRoom != null)
             {
-                if (newRoom.entrances[e].localPosition == otherEntrances[e].localPosition)
-                {
-                    newRoom.entrances[e].isConnected = true;
-                }
+                result.Add(newRoom);
             }
-
-            thisEntrances[i].isConnected = true;
-            otherEntrances[i].isConnected = true;
-            //newRoom.UpdateEntrances(otherEntrances.ToArray());
-            //room.UpdateEntrances(thisEntrances.ToArray());
-
-            added.Add(newRoom);
         }
 
-        return added;
+        return result;
+    }
+
+    private Room GenerateForEntrance(RoomEntrance entrance, Room parent)
+    {
+        if (entrance.isConnected) return null;
+
+        var rooms = roomPrefabs.Shuffle();
+
+        foreach (Room other in rooms)
+        {
+            foreach (RoomEntrance otherEntrance in other.entrances)
+            {
+                if (otherEntrance.outDirection != -entrance.outDirection) continue;
+                if (otherEntrance.width != entrance.width) continue;
+
+                var reference = Scripts.RoomsGenerator.prefabToReference[other];
+
+                Vector2 position = (parent.transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition;
+
+                bool free = IsSpaceFree(reference.shapeObject, position);
+
+                if (!free) continue;
+
+                Room newRoom = Instantiate(other, position, Quaternion.identity);
+                newRoom.entrances.Find(e => e.localPosition == otherEntrance.localPosition).isConnected = true;
+                entrance.isConnected = true;
+
+                return newRoom;
+            }
+        }
+
+        return null;
+    }
+
+    private bool IsSpaceFree(PolygonCollider2D collider, Vector2 position)
+    {
+        collider.gameObject.SetActive(true);
+        collider.transform.parent.gameObject.SetActive(true);
+        collider.transform.position = position;
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.useTriggers = true;
+        contactFilter.layerMask = 1 << roomsLayerIndex;
+
+        List<Collider2D> results = new List<Collider2D>();
+
+        int i = collider.OverlapCollider(contactFilter, results);
+        collider.gameObject.SetActive(false);
+        collider.transform.parent.gameObject.SetActive(false);
+
+        Debug.Log(i);
+
+        return i == 0;
     }
 }

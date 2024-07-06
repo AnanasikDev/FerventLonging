@@ -346,15 +346,19 @@ MonoBehaviour:
   - localPosition: {x: 1.5, y: 0.25}
     width: 0.5
     outDirection: {x: 1, y: 0}
+    isConnected: 0
   - localPosition: {x: 0, y: 1.5}
     width: 1
     outDirection: {x: 0, y: 1}
+    isConnected: 0
   - localPosition: {x: -0.5, y: -1.5}
     width: 1
     outDirection: {x: 0, y: -1}
+    isConnected: 0
   - localPosition: {x: -1.5, y: -0.25}
     width: 0.5
     outDirection: {x: -1, y: 0}
+    isConnected: 0
   shapeObject: {fileID: 6969808415731620928}
 --- !u!212 &4392701661608009724
 SpriteRenderer:
