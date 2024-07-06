@@ -295,8 +295,11 @@ MonoBehaviour:
   - {fileID: 7005097465687824348, guid: e20120490e41daf4099772bd9ed2e017, type: 3}
   - {fileID: 3745517245880727900, guid: 5d8d3db1299f8944bbf89de29a6ae6d8, type: 3}
   - {fileID: 7820584686063173852, guid: 7951be8d22ade1742ba2336f260d9988, type: 3}
-  numberOfRooms: 8
+  numberOfRooms: 50
   generatedRooms: []
+  intersect: 0
+  r1: {fileID: 0}
+  r2: {fileID: 0}
 --- !u!4 &1196553500
 Transform:
   m_ObjectHideFlags: 0

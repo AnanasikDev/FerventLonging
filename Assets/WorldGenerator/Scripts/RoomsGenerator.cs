@@ -53,8 +53,8 @@ public class RoomsGenerator : MonoBehaviour
     private void Update()
     {
         if (r1 == null || r2 == null) return;
-        Debug.Log("Internal: " + r1.boundaries.bounds.Intersects(r2.boundaries.bounds));
-        intersect = DoBoundsIntersect(r1.boundaries.bounds, r2.boundaries.bounds);
+        Debug.Log("Internal: " + r1.bounds.Intersects(r2.bounds));
+        intersect = DoBoundsIntersect(r1.bounds, r2.bounds);
         Debug.Log("Custom: " + intersect);
     }
 
@@ -80,14 +80,15 @@ public class RoomsGenerator : MonoBehaviour
 
         generatedAmount = 1;
 
-        StartCoroutine(gen(first, queue));
+        StartCoroutine(gen(queue));
     }
 
-    IEnumerator gen(Room room, Queue<Room> queue)
+    IEnumerator gen(Queue<Room> queue)
     {
         if (generatedAmount >= numberOfRooms) yield break;
 
         if (queue.Count == 0) yield break;
+        var room = queue.Dequeue();
 
         var newRooms = GenerateNeighbours(room);
         foreach (var newRoom in newRooms)
@@ -97,9 +98,8 @@ public class RoomsGenerator : MonoBehaviour
             queue.Enqueue(newRoom);
         }
 
-        yield return new WaitForFixedUpdate(); //new WaitForSeconds(2);
-        var nextRoom = queue.Dequeue();
-        yield return gen(nextRoom, queue);
+        yield return null; // new WaitForSeconds(3);
+        yield return gen(queue);
     }
 
     private List<Room> GenerateNeighbours(Room parent)
@@ -161,10 +161,10 @@ public class RoomsGenerator : MonoBehaviour
 
         foreach (var room in generatedRooms)
         {
-            if (room == referenceRoom) continue;
+            //if (room == referenceRoom) continue;
 
             //if (room.boundaries.bounds.Intersects(referenceRoom.boundaries.bounds)) return false;
-            if (DoBoundsIntersect(room.boundaries.bounds, referenceRoom.boundaries.bounds)) return false;
+            if (DoBoundsIntersect(room.bounds, referenceRoom.bounds)) return false;
         }
         return true;
     }

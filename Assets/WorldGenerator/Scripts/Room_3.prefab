@@ -438,7 +438,7 @@ MonoBehaviour:
   - localPosition: {x: 5, y: 8}
     width: 2
     outDirection: {x: 0, y: 1}
-  boundaries: {fileID: 4068842309454509871}
+  size: {x: 16, y: 16}
   id: 0
 --- !u!212 &5336435800864620796
 SpriteRenderer:

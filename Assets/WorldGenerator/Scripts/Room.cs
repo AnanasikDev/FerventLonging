@@ -8,7 +8,8 @@ public class Room : MonoBehaviour
 
     public List<RoomEntrance> entrances;
 
-    public Collider2D boundaries;
+    public Vector2 size;
+    public Bounds bounds { get { return new Bounds(transform.position.NullZ(), size.ConvertTo3D()); } }
 
     public int id;
 
@@ -20,6 +21,9 @@ public class Room : MonoBehaviour
 
             Gizmos.DrawWireCube(transform.position + entrance.localPosition.ConvertTo3D(), entrance.width * Vector3.one);
             Gizmos.DrawLine(transform.position + entrance.localPosition.ConvertTo3D(), transform.position + entrance.localPosition.ConvertTo3D() + entrance.outDirection.ConvertTo3D());
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireCube(bounds.center, bounds.size);
         }
     }
 }

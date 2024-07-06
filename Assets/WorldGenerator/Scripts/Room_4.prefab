@@ -429,7 +429,7 @@ MonoBehaviour:
   - localPosition: {x: -0.5, y: 2}
     width: 1
     outDirection: {x: 0, y: 1}
-  boundaries: {fileID: 2934381803784422455}
+  size: {x: 8, y: 4}
   id: 0
 --- !u!212 &8096280095345837997
 SpriteRenderer:
