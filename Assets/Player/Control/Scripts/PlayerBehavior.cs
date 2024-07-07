@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehavior : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     // Warmth
@@ -10,12 +10,13 @@ public class PlayerBehavior : MonoBehaviour
     private float warmth;
 
     // Warmth depletion
-    private float warmthLossTimeInterval = 1.0f;
+    private float warmthLossTimeInterval = 0.5f;
     private float warmthLossTimer = 0.0f;
-
-
-    public WarmthBar warmthBar;
     public float warmthLossRate; // per second
+
+    // Refs
+    public WarmthBar warmthBar;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class PlayerBehavior : MonoBehaviour
         // Init wamrth
         warmth = MAX_WARMTH;
         warmthBar.SetMaxWarmth((int) MAX_WARMTH);
+
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class PlayerBehavior : MonoBehaviour
         if (timeToLoseWarmth)
         {
             warmth -= warmthLossRate;
-            warmthLossTimer -= warmthLossRate;
+            warmthLossTimer -= warmthLossTimeInterval;
         }
 
         // Update UI
@@ -41,5 +43,15 @@ public class PlayerBehavior : MonoBehaviour
 
         // Update timer
         warmthLossTimer += Time.deltaTime;
+    }
+
+    public void incrementWarmth(float incrementWarmth)
+    {
+        warmth += incrementWarmth;
+
+        if (warmth > MAX_WARMTH)
+        {
+            warmth = MAX_WARMTH;
+        }
     }
 }
