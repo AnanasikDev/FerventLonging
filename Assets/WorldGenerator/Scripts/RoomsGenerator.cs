@@ -53,7 +53,7 @@ public class RoomsGenerator : MonoBehaviour
 
         Generate();
 
-        CalculateConnections();
+        //CalculateConnections();
     }
 
     private void InitNavMesh()
@@ -227,11 +227,12 @@ public class RoomsGenerator : MonoBehaviour
             {
                 if (propsPrefabs.Count != 0)
                 {
-                    Vector2[] positions = area.bounds.GenerateRandomPositionsWithinBounds(0.5f);
+                    Vector2[] positions = area.bounds.GenerateRandomPositionsWithinBounds(0.15f);
                     foreach (var pos in positions)
                     {
                         var prop = Instantiate(propsPrefabs.GetRandom());
                         prop.transform.position = pos + room.transform.position.ConvertTo2D();
+                        prop.transform.position = prop.transform.position.SetZ(prop.transform.position.y / 100f);
                         room.AddSpawnedObject(prop);
                     }
                 }
