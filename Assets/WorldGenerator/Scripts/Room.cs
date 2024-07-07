@@ -61,6 +61,8 @@ public class Room : MonoBehaviour
     {
         for (int i = 0; i < spawnedObjects.Count; i++)
         {
+            if (spawnedObjects[i].gameObject.CompareTag("Fuel"))
+                Fuel.fuels.Remove(spawnedObjects[i]);
             Destroy(spawnedObjects[i]);
         }
     }

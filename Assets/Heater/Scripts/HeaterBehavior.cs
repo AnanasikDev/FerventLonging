@@ -31,7 +31,6 @@ public class HeaterBehavior : MonoBehaviour
         heaterFuelBar.SetMaxFuel((int) MAX_FUEL);
         rigidbody = GetComponent<Rigidbody2D>();
         heaterRenderer = GetComponent<HeaterRenderer>();
-        fuel = 10;
     }
 
     // Update is called once per frame
@@ -42,7 +41,7 @@ public class HeaterBehavior : MonoBehaviour
         {
             if (playerInRange() && hasFuel() && Input.GetKey(KeyCode.Space))
             {
-                player.incrementWarmth(warmthStrength);
+                player.increaseWarmth(warmthStrength);
             }
 
             warmthTimer -= warmthTimeInterval; // Resets timer
@@ -85,6 +84,11 @@ public class HeaterBehavior : MonoBehaviour
             fuel = 0;
         }
 
+        UpdateFuel();
+    }
+
+    private void UpdateFuel()
+    {
         heaterFuelBar.SetFuel((int)fuel);
     }
 
@@ -99,6 +103,12 @@ public class HeaterBehavior : MonoBehaviour
     {
         float distToPlayer = (player.transform.position - transform.position).magnitude;
         return distToPlayer < heatRadius;
+    }
+
+    public void AddFuel(int f)
+    {
+        fuel += f;
+        heaterFuelBar.SetFuel((int)fuel);
     }
 
     public bool hasFuel()

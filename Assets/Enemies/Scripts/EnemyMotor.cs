@@ -28,6 +28,8 @@ public class EnemyMotor : MonoBehaviour
         transform.position = agent.transform.position;
         agent.transform.localPosition = Vector3.zero;
 
+        if (!agent.isOnNavMesh) return;
+
         if ((transform.position - player.position).magnitude < maxFollowDistance)
         {
             agent.SetDestination(player.position);

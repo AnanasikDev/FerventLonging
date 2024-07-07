@@ -45,13 +45,23 @@ public class PlayerWarmth : MonoBehaviour
         warmthLossTimer += Time.deltaTime;
     }
 
-    public void incrementWarmth(float incrementWarmth)
+    public void increaseWarmth(float incrementWarmth)
     {
         warmth += incrementWarmth;
 
         if (warmth > MAX_WARMTH)
         {
             warmth = MAX_WARMTH;
+        }
+    }
+
+    public void decreaseWarmth(float incrementWarmth)
+    {
+        warmth -= incrementWarmth;
+
+        if (warmth < 0)
+        {
+            warmth = 0;
         }
     }
 }

@@ -22,12 +22,11 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] public float distanceDestroyThreshold;
 
     [SerializeField] private List<GameObject> propsPrefabs;
-    [SerializeField] private List<GameObject> fuelPrefabs;
+    [SerializeField] private List<Fuel> fuelPrefabs;
     [SerializeField] private List<EnemyController> enemyPrefabs;
 
-    private GameObject navMeshSurfaceHandler;
     [SerializeField] private NavMeshPlus.Components.NavMeshSurface navMeshSurface;
-    private BoxCollider2D navMeshSurfaceCollider;
+    [SerializeField] private Transform referenceHandler;
 
     /// <summary>
     /// A dictionary holding prefab rooms as keys
@@ -46,8 +45,9 @@ public class RoomsGenerator : MonoBehaviour
 
         foreach (var room in roomPrefabs)
         {
-            var reference = Instantiate(room, Vector2.zero, Quaternion.identity, transform);
+            var reference = Instantiate(room, Vector2.one * 100, Quaternion.identity, referenceHandler);
             reference.gameObject.SetActive(false);
+            reference.gameObject.layer = 0;
             prefabToReference.Add(room, reference);
         }
 
@@ -58,16 +58,7 @@ public class RoomsGenerator : MonoBehaviour
 
     private void InitNavMesh()
     {
-        /*
-        navMeshSurfaceHandler = new GameObject();
-        navMeshSurfaceCollider = navMeshSurfaceHandler.AddComponent<BoxCollider2D>();
-        navMeshSurfaceCollider.size = new Vector2(200 * 2, 200 * 2);
-        navMeshSurfaceCollider.offset = Vector2.zero;
-        var navmeshmod = navMeshSurfaceHandler.AddComponent<NavMeshPlus.Components.NavMeshModifier>();
-        navmeshmod.overrideArea = false; // not overriding, taking default value
-        */
         navMeshSurface.BuildNavMesh();
-        //Destroy(collider);
     }
     private void UpdateNavMesh()
     {
@@ -197,7 +188,7 @@ public class RoomsGenerator : MonoBehaviour
 
                 if (!free) continue;
 
-                Room newRoom = Instantiate(other);
+                Room newRoom = Instantiate(other, transform);
                 newRoom.transform.position = position;
                 newRoom.id = generatedAmount;
 
@@ -259,7 +250,8 @@ public class RoomsGenerator : MonoBehaviour
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
                     var fuel = Instantiate(fuelPrefabs.GetRandom());
                     fuel.transform.position = position + room.transform.position.ConvertTo2D();
-                    room.AddSpawnedObject(fuel);
+                    room.AddSpawnedObject(fuel.gameObject);
+                    Fuel.fuels.Add(fuel.gameObject);
                 }
             }
 

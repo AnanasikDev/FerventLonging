@@ -5062,7 +5062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAX_WARMTH: 100
-  warmthLossRate: 1
+  warmthLossRate: 2
   warmthBar: {fileID: 1948793184}
 --- !u!114 &330084791
 MonoBehaviour:
@@ -5076,7 +5076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edf728e61ee34b29bae14c76e09ceb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 0.06
   velocity: {x: 0, y: 0}
 --- !u!212 &330084792
 SpriteRenderer:
@@ -5161,12 +5161,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commitWarmth: 32
   togglePullCart: 323
+  collectFuel: 324
+  putFuel: 324
   horizontalAxis: Horizontal
   verticalAxis: Vertical
   v_horizonalAxis: 0
   v_verticalAxis: 0
   isCommitWarmthPressed: 0
   isTogglePullCartPressed: 0
+  isCollectFuelPressed: 0
+  isPutFuelPressed: 0
 --- !u!114 &330084795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5194,6 +5198,8 @@ MonoBehaviour:
   isPullingCart: 0
   pullingForce: 40
   pullingDistance: 18
+  collectionFuelDistance: 1.5
+  putFuelDistance: 7
 --- !u!1 &428342544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5455,7 +5461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -1.3566895, y: 3.0629997}
+  m_AnchoredPosition: {x: -1.3566895, y: 3.0630035}
   m_SizeDelta: {x: 2.7136, y: 43.486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486187362
@@ -5719,7 +5725,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 72
   m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -5727,7 +5733,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 1
-  m_VoxelSize: 0.4
+  m_VoxelSize: 0.04
   m_BuildHeightMesh: 0
   m_HideEditorLogs: 0
   m_NavMeshData: {fileID: 0}
@@ -5765,7 +5771,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -125.099976, y: 195.17}
+  m_AnchoredPosition: {x: -125.09985, y: 195.16998}
   m_SizeDelta: {x: 200, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &832470224
@@ -5839,7 +5845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -4.6539917, y: 2.4370003}
+  m_AnchoredPosition: {x: -4.6539917, y: 2.4369965}
   m_SizeDelta: {x: -19.309, y: 35.735}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1032877851
@@ -6084,6 +6090,37 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1077609388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077609389}
+  m_Layer: 0
+  m_Name: reference handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1077609389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077609388}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6757526, y: -0.37254, z: -0.12060982}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1196553498
 GameObject:
   m_ObjectHideFlags: 0
@@ -6133,14 +6170,15 @@ MonoBehaviour:
   propsPrefabs:
   - {fileID: 4752438625966349136, guid: ecbcd6775c886994388c8ac6546ea3f8, type: 3}
   - {fileID: 1304288718658994578, guid: b2d624f81bc0b2f4ba395c41df557108, type: 3}
-  - {fileID: 5790735068149481491, guid: 5e19ee135a209dd4fa86930f0f7c0d60, type: 3}
   - {fileID: 6552870990782781666, guid: 87915513acd18784284622aa4fe52c36, type: 3}
   - {fileID: 1197417387720077301, guid: d2c16f8e19794914e8fb91d80e9af685, type: 3}
   - {fileID: 8958429911163961708, guid: 8635d77c6f136d94dbff249d1221daf1, type: 3}
   fuelPrefabs:
-  - {fileID: 982977340614136341, guid: 4ecfd7919c6190145810bbd6930fd659, type: 3}
-  enemyPrefabs: []
+  - {fileID: 8005514957836494252, guid: 4ecfd7919c6190145810bbd6930fd659, type: 3}
+  enemyPrefabs:
+  - {fileID: 425514460600222967, guid: 24c468d0ea9004f49960bc0d593ba837, type: 3}
   navMeshSurface: {fileID: 617081304}
+  referenceHandler: {fileID: 1077609389}
 --- !u!4 &1196553500
 Transform:
   m_ObjectHideFlags: 0
@@ -6352,7 +6390,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.695
+  m_FalloffIntensity: 0.81
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
@@ -6376,7 +6414,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 2.37
+  m_PointLightOuterRadius: 7.21
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -6635,10 +6673,10 @@ RectTransform:
   - {fileID: 486187361}
   m_Father: {fileID: 487388893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -470}
-  m_SizeDelta: {x: 570.286, y: 99.227}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 3, y: 11}
+  m_SizeDelta: {x: 570.286, y: 99.22699}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2007897579
 GameObject:
@@ -6654,7 +6692,7 @@ GameObject:
   - component: {fileID: 2007897580}
   - component: {fileID: 2007897586}
   m_Layer: 0
-  m_Name: Heater (1)
+  m_Name: Heater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6703,7 +6741,7 @@ MonoBehaviour:
   warmthStrength: 2
   heatRadius: 2
   MAX_FUEL: 50
-  fuel: 25
+  fuel: 50
   fuelBurnRate: 1.5
   player: {fileID: 330084790}
   WarmthBarFill: {fileID: 1914899831}
@@ -6859,3 +6897,4 @@ SceneRoots:
   - {fileID: 2007897584}
   - {fileID: 330084793}
   - {fileID: 428342547}
+  - {fileID: 1077609389}
