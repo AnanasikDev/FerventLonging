@@ -407,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2018c26987637064db54a1160a1eb3f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnabled: 1
   roomPrefabs:
   - {fileID: 5699402418850133331, guid: 9afc6711c39965d49b6d9b63ce220e62, type: 3}
   - {fileID: 7005097465687824348, guid: e20120490e41daf4099772bd9ed2e017, type: 3}
@@ -416,12 +417,16 @@ MonoBehaviour:
   - {fileID: 96454139741121628, guid: 25b8c34d8304fbe49bfb23cc47355f0f, type: 3}
   - {fileID: 4255132422439712875, guid: 6789cec4b5f7f084dadab33c5a35e96c, type: 3}
   numberOfRooms: 20
-  isEnabled: 1
   doNotRepeateParent: 1
   generatedRooms: []
   player: {fileID: 1461498060}
   distanceGenerateThreshold: 30
   distanceDestroyThreshold: 180
+  propsPrefabs:
+  - {fileID: 4752438625966349136, guid: ecbcd6775c886994388c8ac6546ea3f8, type: 3}
+  fuelPrefabs:
+  - {fileID: 982977340614136341, guid: 4ecfd7919c6190145810bbd6930fd659, type: 3}
+  enemyPrefabs: []
 --- !u!4 &1196553500
 Transform:
   m_ObjectHideFlags: 0

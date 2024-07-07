@@ -2,14 +2,15 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class RoomsGenerator : MonoBehaviour
 {
+    [SerializeField] private bool isEnabled = true;
     [SerializeField] private List<Room> roomPrefabs;
     [SerializeField] private int numberOfRooms = 40;
     [ShowNonSerializedField][ReadOnly]
     private int generatedAmount = 0;
-    [SerializeField] private bool isEnabled = true;
 
     [Tooltip("If true, children must be different from the parent")][SerializeField] 
     private bool doNotRepeateParent = true;
@@ -19,6 +20,10 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] public float distanceGenerateThreshold;
     [SerializeField] public float distanceDestroyThreshold;
+
+    [SerializeField] private List<GameObject> propsPrefabs;
+    [SerializeField] private List<GameObject> fuelPrefabs;
+    [SerializeField] private List<GameObject> enemyPrefabs;
 
     /// <summary>
     /// A dictionary holding prefab rooms as keys
@@ -127,6 +132,7 @@ public class RoomsGenerator : MonoBehaviour
             {
                 result.Add(newRoom);
                 generatedRooms.Add(newRoom);
+                FillRoomAreas(newRoom);
             }
         }
 
@@ -176,6 +182,49 @@ public class RoomsGenerator : MonoBehaviour
             if (DoBoundsIntersect(room.bounds, referenceRoom.bounds)) return false;
         }
         return true;
+    }
+
+    private void FillRoomAreas(Room room)
+    {
+        foreach (var area in room.fillinAreas)
+        {
+            if (!area.isEmpty) continue;
+
+            if (area.areaType == AreaType.Props)
+            {
+                if (propsPrefabs.Count != 0)
+                {
+                    Vector2[] positions = area.bounds.GenerateRandomPositionsWithinBounds(0.5f);
+                    foreach (var pos in positions)
+                    {
+                        var prop = Instantiate(propsPrefabs.GetRandom());
+                        prop.transform.position = pos + room.transform.position.ConvertTo2D();
+                    }
+                }
+            }
+
+            if (area.areaType == AreaType.Enemies)
+            {
+                if (enemyPrefabs.Count != 0)
+                {
+                    Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
+                    var enemy = Instantiate(enemyPrefabs.GetRandom());
+                    enemy.transform.position = position + room.transform.position.ConvertTo2D();
+                }
+            }
+
+            if (area.areaType == AreaType.Fuel)
+            {
+                if (fuelPrefabs.Count != 0)
+                {
+                    Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
+                    var fuel = Instantiate(fuelPrefabs.GetRandom());
+                    fuel.transform.position = position + room.transform.position.ConvertTo2D();
+                }
+            }
+
+            area.isEmpty = false;
+        }
     }
 
     private void CalculateConnections()

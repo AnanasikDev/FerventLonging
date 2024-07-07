@@ -86,4 +86,24 @@ public static class Utils
     public static T[] Shuffle<T>(this T[] array) => array.OrderBy(_ => Random.value).ToArray();
 
     public static bool IsInsideBounds(this Vector2 position, Bounds bounds) => position.x > bounds.min.x && position.x < bounds.max.x && position.y > bounds.min.y && position.y < bounds.max.y;
+
+    public static Vector2 GenerateRandomPositionWithinBounds(this Bounds bounds)
+    {
+        return new Vector2(Random.value * bounds.size.x, Random.value * bounds.size.y) + bounds.min.ConvertTo2D();
+    }
+
+    public static Vector2[] GenerateRandomPositionsWithinBounds(this Bounds bounds, float areaFactor)
+    {
+        int number = (int)(bounds.size.x * bounds.size.y * areaFactor);
+
+        Vector2[] result = new Vector2[number];
+        for (int i = 0; i < number; i++)
+        {
+            result[i] = new Vector2(Random.value * bounds.size.x, Random.value * bounds.size.y) + bounds.min.ConvertTo2D();
+        }
+
+        return result;
+    }
+    public static T GetRandom<T>(this T[] array) => array[Random.Range(0, array.Length)];
+    public static T GetRandom<T>(this List<T> list) => list[Random.Range(0, list.Count)];
 }
