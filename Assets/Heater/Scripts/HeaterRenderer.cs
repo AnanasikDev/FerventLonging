@@ -10,11 +10,13 @@ public class HeaterRenderer : MonoBehaviour
 
     public Vector2 handlerPosition { get; private set; }
 
-    private float step;
+    public float step { get; private set; }
+    public int numberOfSteps;
 
     private void Start()
     {
-        step = 360f / sprites.Length;
+        numberOfSteps = sprites.Length;
+        step = 360f / numberOfSteps;
     }
 
     private void Update()
@@ -40,7 +42,7 @@ public class HeaterRenderer : MonoBehaviour
 
     private int GetSpriteIndex(float angle)
     {
-        return (int)Mathf.Repeat(angle / -step, sprites.Length);
+        return (int)(Mathf.Repeat(angle / -step, numberOfSteps));
     }
 
     private void OnDrawGizmos()
