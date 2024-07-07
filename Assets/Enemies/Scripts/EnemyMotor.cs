@@ -14,7 +14,7 @@ public class EnemyMotor : MonoBehaviour
 
     public void Init()
     {
-        player = Scripts.Player;
+        player = Scripts.Player.transform;
         originalPosition = transform.position;
 
         agent.enabled = false;

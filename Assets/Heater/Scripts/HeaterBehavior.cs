@@ -21,7 +21,7 @@ public class HeaterBehavior : MonoBehaviour
     public float fuelBurnRate; // per sec
 
     // Refs
-    public Player player;
+    public PlayerWarmth player;
     public GameObject WarmthBarFill;
     public HeaterFuelBar heaterFuelBar;
 

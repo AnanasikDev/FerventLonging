@@ -17,7 +17,7 @@ public class HeaterRenderer : MonoBehaviour
 
     private void Update()
     {
-        LookAt(Scripts.Player);
+        LookAt(Scripts.Player.transform);
     }
 
     public void LookAt(Transform target)

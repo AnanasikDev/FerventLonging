@@ -132,9 +132,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 330084793}
-  - component: {fileID: 330084792}
+  - component: {fileID: 330084795}
+  - component: {fileID: 330084794}
   - component: {fileID: 330084791}
   - component: {fileID: 330084790}
+  - component: {fileID: 330084792}
   - component: {fileID: 330084789}
   - component: {fileID: 330084788}
   m_Layer: 0
@@ -312,6 +314,38 @@ Transform:
   - {fileID: 1032877852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330084794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330084787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb32b50e1289d448b788a61516c46a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commitWarmth: 32
+  togglePullCart: 323
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
+  v_horizonalAxis: 0
+  v_verticalAxis: 0
+  isCommitWarmthPressed: 0
+  isTogglePullCartPressed: 0
+--- !u!114 &330084795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330084787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b987551bd9289e840bf95905045297b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &428342544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RoomsGenerator: {fileID: 1196553499}
-  _Player: {fileID: 330084793}
+  _Player: {fileID: 330084795}
 --- !u!114 &1196553502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,7 +1261,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.3
+  m_FalloffIntensity: 0.75
   m_Color: {r: 0.9496855, g: 0.5744564, b: 0.45692405, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
@@ -1251,7 +1285,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 5.5
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

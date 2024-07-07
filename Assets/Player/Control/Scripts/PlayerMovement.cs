@@ -1,24 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     public float speed;
-    private float h;
-    private float v;
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateMovement()
     {
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
-    }
-
-    private void FixedUpdate()
-    {
-        Vector2 translation = new Vector2(h, v) * speed;
+        Vector2 translation = new Vector2(Scripts.Player.playerInput.v_horizonalAxis, Scripts.Player.playerInput.v_verticalAxis) * speed;
 
         gameObject.transform.position = gameObject.transform.position.ConvertTo2D() + translation;
     }

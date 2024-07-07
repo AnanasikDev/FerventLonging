@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerWarmth : MonoBehaviour
 {
 
     // Warmth
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         // Init wamrth
         warmth = MAX_WARMTH;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void UpdateWarmth()
     {
         // Deplete warmth
         bool timeToLoseWarmth = warmthLossTimer >= warmthLossTimeInterval;
