@@ -1,8 +1,8 @@
 using NaughtyAttributes;
+using NavMeshPlus.Components;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class RoomsGenerator : MonoBehaviour
 {
@@ -23,7 +23,11 @@ public class RoomsGenerator : MonoBehaviour
 
     [SerializeField] private List<GameObject> propsPrefabs;
     [SerializeField] private List<GameObject> fuelPrefabs;
-    [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private List<EnemyController> enemyPrefabs;
+
+    private GameObject navMeshSurfaceHandler;
+    [SerializeField] private NavMeshPlus.Components.NavMeshSurface navMeshSurface;
+    private BoxCollider2D navMeshSurfaceCollider;
 
     /// <summary>
     /// A dictionary holding prefab rooms as keys
@@ -35,6 +39,8 @@ public class RoomsGenerator : MonoBehaviour
     public void Init()
     {
         if (!isEnabled) return;
+
+        InitNavMesh();
 
         generatedAmount = 0;
 
@@ -50,6 +56,24 @@ public class RoomsGenerator : MonoBehaviour
         CalculateConnections();
     }
 
+    private void InitNavMesh()
+    {
+        navMeshSurfaceHandler = new GameObject();
+        navMeshSurfaceCollider = navMeshSurfaceHandler.AddComponent<BoxCollider2D>();
+        navMeshSurfaceCollider.size = new Vector2(200 * 2, 200 * 2);
+        navMeshSurfaceCollider.offset = Vector2.zero;
+        var navmeshmod = navMeshSurfaceHandler.AddComponent<NavMeshPlus.Components.NavMeshModifier>();
+        navmeshmod.overrideArea = false; // not overriding, taking default value
+
+        navMeshSurface.BuildNavMesh();
+        //Destroy(collider);
+    }
+    private void UpdateNavMesh()
+    {
+        navMeshSurfaceCollider.offset = player.position;
+        navMeshSurface.BuildNavMeshAsync();
+    }
+
     private void FixedUpdate()
     {
         if (!isEnabled) return;
@@ -58,12 +82,16 @@ public class RoomsGenerator : MonoBehaviour
 
     private void UpdateProcedural()
     {
+        int change = generatedAmount;
+
         var roomsToGenerate = generatedRooms.Where(room => (room.transform.position - player.transform.position).magnitude < distanceGenerateThreshold).ToList();
 
         foreach (var room in roomsToGenerate)
         {
             GenerateNeighbours(room);
         }
+
+        change = generatedAmount - change;
 
         var roomsToDestroy = generatedRooms.Where(room => (room.transform.position - player.transform.position).magnitude > distanceDestroyThreshold).ToList();
 
@@ -73,6 +101,9 @@ public class RoomsGenerator : MonoBehaviour
             generatedRooms.Remove(room);
             Destroy(room.gameObject);
         }
+
+        if (change > 0)
+            UpdateNavMesh();
     }
 
     public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
@@ -130,8 +161,10 @@ public class RoomsGenerator : MonoBehaviour
             var newRoom = GenerateForEntrance(entrance, parent);
             if (newRoom != null)
             {
+                newRoom.Init();
                 result.Add(newRoom);
                 generatedRooms.Add(newRoom);
+                generatedAmount++;
                 FillRoomAreas(newRoom);
             }
         }
@@ -199,6 +232,7 @@ public class RoomsGenerator : MonoBehaviour
                     {
                         var prop = Instantiate(propsPrefabs.GetRandom());
                         prop.transform.position = pos + room.transform.position.ConvertTo2D();
+                        room.AddSpawnedObject(prop);
                     }
                 }
             }
@@ -210,6 +244,8 @@ public class RoomsGenerator : MonoBehaviour
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
                     var enemy = Instantiate(enemyPrefabs.GetRandom());
                     enemy.transform.position = position + room.transform.position.ConvertTo2D();
+                    enemy.Init();
+                    room.AddSpawnedObject(enemy.gameObject);
                 }
             }
 
@@ -220,6 +256,7 @@ public class RoomsGenerator : MonoBehaviour
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
                     var fuel = Instantiate(fuelPrefabs.GetRandom());
                     fuel.transform.position = position + room.transform.position.ConvertTo2D();
+                    room.AddSpawnedObject(fuel);
                 }
             }
 

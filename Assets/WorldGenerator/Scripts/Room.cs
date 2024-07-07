@@ -1,6 +1,8 @@
+using NavMeshPlus.Components;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Room : MonoBehaviour
 {
@@ -13,7 +15,24 @@ public class Room : MonoBehaviour
 
     [Tooltip("Areas where props, fuel and enemies will be spawned")] public Area[] fillinAreas;
 
+    //[SerializeField] private GameObject collidersHandler;
+
     public int id;
+
+    private List<GameObject> spawnedObjects = new List<GameObject>();
+
+    public void Init()
+    {
+        var obstacle = gameObject.AddComponent<NavMeshModifier>();
+        obstacle.overrideArea = true;
+        obstacle.area = NavMesh.GetAreaFromName("Not Walkable");
+    }
+
+    public void AddSpawnedObject(GameObject spawnedObject)
+    {
+        spawnedObjects.Add(spawnedObject);
+        spawnedObject.transform.SetParent(transform);
+    }
 
     private void OnDrawGizmos()
     {
@@ -28,12 +47,21 @@ public class Room : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(bounds.center, bounds.size);
 
+        if (fillinAreas != null)
         foreach (var area in fillinAreas)
         {
             if (area.areaType == AreaType.Fuel) Gizmos.color = Color.green;
             if (area.areaType == AreaType.Props) Gizmos.color = Color.cyan;
             if (area.areaType == AreaType.Enemies) Gizmos.color = new Color(255, 64, 0);
             Gizmos.DrawWireCube(area.bounds.center + transform.position, area.bounds.size);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < spawnedObjects.Count; i++)
+        {
+            Destroy(spawnedObjects[i]);
         }
     }
 }
