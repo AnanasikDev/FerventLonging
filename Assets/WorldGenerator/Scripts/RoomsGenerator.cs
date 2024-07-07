@@ -85,7 +85,10 @@ public class RoomsGenerator : MonoBehaviour
     private void Generate()
     {
         Queue<Room> queue = new Queue<Room>();
-        var first = Instantiate(roomPrefabs[Random.Range(0, roomPrefabs.Count)], Vector2.zero, Quaternion.identity);
+
+        // 0 - 2 for the reason of creating the
+        // first room big enough for the heater to fit
+        var first = Instantiate(roomPrefabs[Random.Range(0, 2)], Vector2.zero, Quaternion.identity);
         first.name += $" [{generatedAmount}]";
         generatedRooms.Add(first);
         queue.Enqueue(first);
