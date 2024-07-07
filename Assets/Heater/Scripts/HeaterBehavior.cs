@@ -27,7 +27,6 @@ public class HeaterBehavior : MonoBehaviour
 
     public void Init()
     {
-        fuel = MAX_FUEL;
         heaterFuelBar.SetMaxFuel((int) MAX_FUEL);
         rigidbody = GetComponent<Rigidbody2D>();
         heaterRenderer = GetComponent<HeaterRenderer>();

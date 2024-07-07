@@ -11,6 +11,7 @@ public class PlayerInteraction : MonoBehaviour
     private int collectedFuel = 0;
     [SerializeField] private float collectionFuelDistance = 4;
     [SerializeField] private float putFuelDistance = 4;
+    [SerializeField] private int fuelWarmth = 7;
 
     private Vector2 target;
     
@@ -25,17 +26,17 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Scripts.Player.playerInput.isTogglePullCartPressed)
         {
-            if (!isPullingCart && (transform.position - Scripts.Heater.transform.position).magnitude < pullingDistance)
-            {
-                isPullingCart = true;
-                Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.pullingSpeed);
-            }
-
-            else if (isPullingCart || (transform.position - Scripts.Heater.transform.position).magnitude >= pullingDistance)
+            if (isPullingCart || (transform.position - Scripts.Heater.transform.position).magnitude >= pullingDistance)
             {
                 isPullingCart = false;
                 Scripts.Heater.rigidbody.velocity = Vector3.zero;
                 Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.walkingSpeed);
+            }
+            
+            else if (!isPullingCart && (transform.position - Scripts.Heater.transform.position).magnitude < pullingDistance)
+            {
+                isPullingCart = true;
+                Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.pullingSpeed);
             }
         }
 
@@ -78,7 +79,7 @@ public class PlayerInteraction : MonoBehaviour
         // too far away from the heater
         if ((transform.position - Scripts.Heater.transform.position).sqrMagnitude > putFuelDistance * putFuelDistance) return false;
 
-        Scripts.Heater.AddFuel(collectedFuel * 4);
+        Scripts.Heater.AddFuel(collectedFuel * fuelWarmth);
         collectedFuel = 0;
 
         return true;

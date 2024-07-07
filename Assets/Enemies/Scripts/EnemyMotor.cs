@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyMotor : MonoBehaviour
 {
-    [SerializeField][Required] private NavMeshAgent agent;
+    [Required] public NavMeshAgent agent;
     public Transform player { get; private set; }
     [SerializeField] private float minDistanceToHeater;
     [SerializeField] private float maxFollowDistance;

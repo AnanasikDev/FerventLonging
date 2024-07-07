@@ -5201,7 +5201,8 @@ MonoBehaviour:
   pullingForce: 40
   pullingDistance: 18
   collectionFuelDistance: 1.5
-  putFuelDistance: 7
+  putFuelDistance: 4
+  fuelWarmth: 7
 --- !u!1 &428342544
 GameObject:
   m_ObjectHideFlags: 0
@@ -6741,10 +6742,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warmthTimeInterval: 0.25
   warmthStrength: 7
-  heatRadius: 2
-  MAX_FUEL: 50
-  fuel: 50
-  fuelBurnRate: 1.5
+  heatRadius: 4.5
+  MAX_FUEL: 100
+  fuel: 75
+  fuelBurnRate: 1
   player: {fileID: 330084790}
   WarmthBarFill: {fileID: 1914899831}
   heaterFuelBar: {fileID: 1039630157}

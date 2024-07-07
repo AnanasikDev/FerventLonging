@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    private EnemyController enemyController;
+
     [SerializeField] private float maxAttackDistance = 3;
     [SerializeField] private float attackDelay = 1.25f;
     [SerializeField] private float warmthDamage = 5f;
@@ -12,6 +14,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void Init()
     {
+        enemyController = GetComponent<EnemyController>();
         lastTime = Time.time;
     }
 
@@ -32,11 +35,13 @@ public class EnemyAttack : MonoBehaviour
 
     public void Attack()
     {
-        Scripts.Player.playerWarmth.decreaseWarmth(warmthDamage);
-
         Vector2 direction = Scripts.Player.transform.position - transform.position;
 
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+
+        if (Mathf.Abs(Mathf.Repeat(targetAngle, 360) - enemyController.enemyMotor.agent.transform.eulerAngles.z) < 70)
+            Scripts.Player.playerWarmth.decreaseWarmth(warmthDamage);
+
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
 
         attackParticles.transform.rotation = targetRotation;
