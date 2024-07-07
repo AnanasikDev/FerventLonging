@@ -9,6 +9,7 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] private int numberOfRooms = 40;
     [ShowNonSerializedField][ReadOnly]
     private int generatedAmount = 0;
+    [SerializeField] private bool isEnabled = true;
 
     [Tooltip("If true, children must be different from the parent")][SerializeField] 
     private bool doNotRepeateParent = true;
@@ -28,6 +29,8 @@ public class RoomsGenerator : MonoBehaviour
 
     public void Init()
     {
+        if (!isEnabled) return;
+
         generatedAmount = 0;
 
         foreach (var room in roomPrefabs)
@@ -44,6 +47,7 @@ public class RoomsGenerator : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isEnabled) return;
         UpdateProcedural();
     }
 

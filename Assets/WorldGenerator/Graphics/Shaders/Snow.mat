@@ -60,14 +60,21 @@ Material:
     - _EnableExternalAlpha: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _faloffFactor: 8
+    - _heaterMaxDistance: 0.5
     - _noiseScale: 100
     - _noiseness: 0.5
     - _pixelation: 64
+    - _shineScale: 229.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _heaterPos1: {r: -0.7, g: -0.19, b: 0, a: 0}
+    - _heaterPos2: {r: -0.7, g: -0.19, b: 0, a: 0}
+    - _heaterPos3: {r: -0.7, g: -0.19, b: 0, a: 0}
     - _noiseColor: {r: 0.7858075, g: 0.8301887, b: 0.82184714, a: 1}
+    - _shineColor: {r: 0.6862267, g: 0.8294175, b: 0.98742133, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8815603862279128926
 MonoBehaviour:
