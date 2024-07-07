@@ -15,9 +15,9 @@ public class Scripts : MonoBehaviour
 
     private void Start()
     {
+        Player = _Player;
+
         RoomsGenerator = _RoomsGenerator;
         RoomsGenerator.Init();
-
-        Player = _Player;
     }
 }

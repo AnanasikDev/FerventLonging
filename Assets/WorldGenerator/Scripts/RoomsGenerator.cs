@@ -58,19 +58,20 @@ public class RoomsGenerator : MonoBehaviour
 
     private void InitNavMesh()
     {
+        /*
         navMeshSurfaceHandler = new GameObject();
         navMeshSurfaceCollider = navMeshSurfaceHandler.AddComponent<BoxCollider2D>();
         navMeshSurfaceCollider.size = new Vector2(200 * 2, 200 * 2);
         navMeshSurfaceCollider.offset = Vector2.zero;
         var navmeshmod = navMeshSurfaceHandler.AddComponent<NavMeshPlus.Components.NavMeshModifier>();
         navmeshmod.overrideArea = false; // not overriding, taking default value
-
+        */
         navMeshSurface.BuildNavMesh();
         //Destroy(collider);
     }
     private void UpdateNavMesh()
     {
-        navMeshSurfaceCollider.offset = player.position;
+        //navMeshSurfaceCollider.offset = player.position;
         navMeshSurface.BuildNavMeshAsync();
     }
 
@@ -126,6 +127,7 @@ public class RoomsGenerator : MonoBehaviour
         // first room big enough for the heater to fit
         var first = Instantiate(roomPrefabs[Random.Range(0, 2)], Vector2.zero, Quaternion.identity);
         first.name += $" [{generatedAmount}]";
+        first.Init();
         generatedRooms.Add(first);
         queue.Enqueue(first);
 
