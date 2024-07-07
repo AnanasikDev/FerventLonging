@@ -895,8 +895,8 @@ Camera:
   m_GameObject: {fileID: 1032877851}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1127,7 +1127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RoomsGenerator: {fileID: 1196553499}
-  _Player: {fileID: 0}
+  _Player: {fileID: 330084793}
 --- !u!114 &1196553502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,6 +1528,7 @@ GameObject:
   - component: {fileID: 2007897582}
   - component: {fileID: 2007897581}
   - component: {fileID: 2007897580}
+  - component: {fileID: 2007897585}
   m_Layer: 0
   m_Name: Heater (1)
   m_TagString: Untagged
@@ -1598,8 +1599,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 2.05}
-    newSize: {x: 0.8, y: 2.05}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1669,12 +1670,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3730b95e790314776a19434a22416b2c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e113d1731f9b8b54d93bfaf962206144, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8, y: 2.05}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1689,13 +1690,35 @@ Transform:
   m_GameObject: {fileID: 2007897579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.15, y: 2.15, z: 1}
+  m_LocalPosition: {x: 0.14, y: 0.18, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1499787127}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2007897585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007897579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b3846838e1c004a92945424587487e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: e113d1731f9b8b54d93bfaf962206144, type: 3}
+  - {fileID: 21300000, guid: 8dfe0ee20f60d9741ad40636bf25bf25, type: 3}
+  - {fileID: 21300000, guid: 7aa013e7732bf3642ad4f99509b4656c, type: 3}
+  - {fileID: 21300000, guid: d96874d744f4aec4c9fedf92d12e7ee2, type: 3}
+  - {fileID: 21300000, guid: ad564668198e10d4c85f16e648e562dd, type: 3}
+  - {fileID: 21300000, guid: bd6a20c7694f0974d96398b677e05b04, type: 3}
+  - {fileID: 21300000, guid: da4d936001bdd5445a285d48fab0d864, type: 3}
+  - {fileID: 21300000, guid: 43bfc4aa9be955649a026833b9a649ce, type: 3}
+  renderer: {fileID: 2007897583}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

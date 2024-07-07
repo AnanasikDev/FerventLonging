@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 7372620718746661588}
   - component: {fileID: 3610431776986204816}
   - component: {fileID: 7043813287980268259}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 6290888324082363180}
   - component: {fileID: 6154694082647119550}
   - component: {fileID: 850958451835977207}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
