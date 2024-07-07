@@ -503,6 +503,11 @@ MonoBehaviour:
   distanceDestroyThreshold: 180
   propsPrefabs:
   - {fileID: 4752438625966349136, guid: ecbcd6775c886994388c8ac6546ea3f8, type: 3}
+  - {fileID: 1304288718658994578, guid: b2d624f81bc0b2f4ba395c41df557108, type: 3}
+  - {fileID: 5790735068149481491, guid: 5e19ee135a209dd4fa86930f0f7c0d60, type: 3}
+  - {fileID: 6552870990782781666, guid: 87915513acd18784284622aa4fe52c36, type: 3}
+  - {fileID: 1197417387720077301, guid: d2c16f8e19794914e8fb91d80e9af685, type: 3}
+  - {fileID: 8958429911163961708, guid: 8635d77c6f136d94dbff249d1221daf1, type: 3}
   fuelPrefabs:
   - {fileID: 982977340614136341, guid: 4ecfd7919c6190145810bbd6930fd659, type: 3}
   enemyPrefabs: []
