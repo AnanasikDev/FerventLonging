@@ -6,6 +6,7 @@ public class EnemyMotor : MonoBehaviour
 {
     [SerializeField][Required] private NavMeshAgent agent;
     public Transform player { get; private set; }
+    [SerializeField] private float minDistanceToHeater;
     [SerializeField] private float maxFollowDistance;
 
     [HideInInspector] public Vector2 originalPosition;
@@ -30,12 +31,16 @@ public class EnemyMotor : MonoBehaviour
 
         if (!agent.isOnNavMesh) return;
 
-        if ((transform.position - player.position).magnitude < maxFollowDistance)
+        float distanceToHeater = (transform.position - Scripts.Heater.transform.position).magnitude;
+        float playerDistanceToHeater = (Scripts.Player.transform.position - Scripts.Heater.transform.position).magnitude;
+
+        if ((transform.position - player.position).magnitude < maxFollowDistance && distanceToHeater >= minDistanceToHeater && playerDistanceToHeater >= minDistanceToHeater)
         {
             agent.SetDestination(player.position);
             isDestinationSet = true;
+            return;
         }
-        else if (isDestinationSet == true)
+        if (isDestinationSet == true || distanceToHeater < minDistanceToHeater || playerDistanceToHeater < minDistanceToHeater)
         {
             agent.SetDestination(originalPosition);
             isDestinationSet = false;

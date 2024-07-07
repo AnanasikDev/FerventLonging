@@ -5076,7 +5076,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edf728e61ee34b29bae14c76e09ceb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.06
+  walkingSpeed: 0.065
+  pullingSpeed: 0.04
+  currentSpeed: 0
   velocity: {x: 0, y: 0}
 --- !u!212 &330084792
 SpriteRenderer:

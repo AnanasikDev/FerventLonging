@@ -28,12 +28,14 @@ public class PlayerInteraction : MonoBehaviour
             if (!isPullingCart && (transform.position - Scripts.Heater.transform.position).magnitude < pullingDistance)
             {
                 isPullingCart = true;
+                Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.pullingSpeed);
             }
 
             else if (isPullingCart || (transform.position - Scripts.Heater.transform.position).magnitude >= pullingDistance)
             {
                 isPullingCart = false;
                 Scripts.Heater.rigidbody.velocity = Vector3.zero;
+                Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.walkingSpeed);
             }
         }
 
@@ -52,7 +54,7 @@ public class PlayerInteraction : MonoBehaviour
             float d = (transform.position - Scripts.Heater.transform.position).magnitude;
             if (d < 6)
             {
-                Scripts.Heater.transform.position += relativeShift.ConvertTo3D() * 0.01f;
+                Scripts.Heater.transform.position += relativeShift.ConvertTo3D() * 0.0125f;
             }
         }
     }

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
         playerWarmth = GetComponent<PlayerWarmth>();
         playerInteraction = GetComponent<PlayerInteraction>();
 
+        playerMovement.Init();
         playerWarmth.Init();
     }
 
