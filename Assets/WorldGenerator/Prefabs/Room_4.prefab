@@ -346,8 +346,8 @@ MonoBehaviour:
   - localPosition: {x: 4, y: 1}
     width: 1
     outDirection: {x: 1, y: 0}
-  - localPosition: {x: -4, y: -0.25}
-    width: 2.5
+  - localPosition: {x: -4, y: 0}
+    width: 3
     outDirection: {x: -1, y: 0}
   - localPosition: {x: -0.5, y: 2}
     width: 1

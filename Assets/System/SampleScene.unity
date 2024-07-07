@@ -298,8 +298,11 @@ MonoBehaviour:
   - {fileID: 4824762023903311955, guid: c46734b2300c7e9449db625e5e90a580, type: 3}
   - {fileID: 96454139741121628, guid: 25b8c34d8304fbe49bfb23cc47355f0f, type: 3}
   - {fileID: 4255132422439712875, guid: 6789cec4b5f7f084dadab33c5a35e96c, type: 3}
-  numberOfRooms: 100
+  numberOfRooms: 20
+  doNotRepeateParent: 1
   generatedRooms: []
+  player: {fileID: 1461498059}
+  distanceThreshold: 50
 --- !u!4 &1196553500
 Transform:
   m_ObjectHideFlags: 0
@@ -328,9 +331,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RoomsGenerator: {fileID: 1196553499}
+--- !u!1 &1461498059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1461498060}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1461498060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461498059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1196553500}
+  - {fileID: 1461498060}

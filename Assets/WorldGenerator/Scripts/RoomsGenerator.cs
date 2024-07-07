@@ -18,6 +18,9 @@ public class RoomsGenerator : MonoBehaviour
 
     [ReadOnly] public List<Room> generatedRooms = new List<Room>();
 
+    public GameObject player;
+    public float distanceThreshold;
+
     /// <summary>
     /// A dictionary holding prefab rooms as keys
     /// and their in-scene instances as values.
@@ -39,6 +42,16 @@ public class RoomsGenerator : MonoBehaviour
         Generate();
 
         CalculateConnections();
+    }
+
+    private void Update()
+    {
+        var rooms = generatedRooms.Where(room => (room.transform.position - player.transform.position).magnitude < distanceThreshold).ToList();
+
+        foreach (var room in rooms)
+        {
+            GenerateNeighbours(room);
+        }
     }
 
     public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
@@ -63,14 +76,14 @@ public class RoomsGenerator : MonoBehaviour
 
         generatedAmount = 1;
 
-        StartCoroutine(gen(queue));
+        gen(queue);
     }
 
-    IEnumerator gen(Queue<Room> queue)
+    void gen(Queue<Room> queue)
     {
-        if (generatedAmount >= numberOfRooms) yield break;
+        if (generatedAmount >= numberOfRooms) return;
 
-        if (queue.Count == 0) yield break;
+        if (queue.Count == 0) return;
         var room = queue.Dequeue();
 
         var newRooms = GenerateNeighbours(room);
@@ -81,8 +94,7 @@ public class RoomsGenerator : MonoBehaviour
             queue.Enqueue(newRoom);
         }
 
-        yield return null; // new WaitForSeconds(3);
-        yield return gen(queue);
+        gen(queue);
     }
 
     private List<Room> GenerateNeighbours(Room parent)

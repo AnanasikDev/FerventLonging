@@ -53,7 +53,7 @@ MonoBehaviour:
   - localPosition: {x: 8, y: -5.5}
     width: 6
     outDirection: {x: 1, y: 0}
-  - localPosition: {x: -1, y: -12}
+  - localPosition: {x: -3.5, y: -12}
     width: 6
     outDirection: {x: 0, y: -1}
   - localPosition: {x: -8, y: -8}
