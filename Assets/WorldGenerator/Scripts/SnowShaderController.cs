@@ -8,7 +8,7 @@ public class SnowShaderController : MonoBehaviour
 
     //[SerializeField] private Material material;
 
-    [SerializeField] private new SpriteRenderer renderer;
+    [SerializeField] private Material material;
 
     [SerializeField][ReadOnly] private List<Vector2> positions = new List<Vector2>();
 
@@ -30,8 +30,8 @@ public class SnowShaderController : MonoBehaviour
 
     private void Update()
     {
-        if (positions.Count > 0) renderer.sharedMaterial.SetVector("_heaterPos1", positions[0]);
-        if (positions.Count > 1) renderer.sharedMaterial.SetVector("_heaterPos2", positions[1]);
-        if (positions.Count > 2) renderer.sharedMaterial.SetVector("_heaterPos3", positions[2]);
+        if (positions.Count > 0) material.SetVector("_heaterPos1", positions[0]);
+        if (positions.Count > 1) material.SetVector("_heaterPos2", positions[1]);
+        if (positions.Count > 2) material.SetVector("_heaterPos3", positions[2]);
     }
 }

@@ -43,6 +43,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d15ce8fc14a6404bb1c9e361803b8dab_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 0b4dfc4a8a1d77f43a74490a132b6dc8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -60,19 +64,20 @@ Material:
     - _EnableExternalAlpha: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _faloffFactor: 8
-    - _heaterMaxDistance: 0.5
+    - _faloffFactor: 3
+    - _heaterMaxDistance: 1.5
     - _noiseScale: 100
     - _noiseness: 0.5
     - _pixelation: 64
+    - _scale: 0.2
     - _shineScale: 229.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _heaterPos1: {r: -0.7, g: -0.19, b: 0, a: 0}
-    - _heaterPos2: {r: -0.7, g: -0.19, b: 0, a: 0}
-    - _heaterPos3: {r: -0.7, g: -0.19, b: 0, a: 0}
+    - _heaterPos1: {r: 2.9, g: 74.8, b: 0, a: 0}
+    - _heaterPos2: {r: 2.9, g: 74.8, b: 0, a: 0}
+    - _heaterPos3: {r: 2.9, g: 74.8, b: 0, a: 0}
     - _noiseColor: {r: 0.7858075, g: 0.8301887, b: 0.82184714, a: 1}
     - _shineColor: {r: 0.6862267, g: 0.8294175, b: 0.98742133, a: 1}
   m_BuildTextureStacks: []
