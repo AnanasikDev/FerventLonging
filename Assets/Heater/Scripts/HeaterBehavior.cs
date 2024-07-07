@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class HeaterBehavior : MonoBehaviour
 {
+    public HeaterRenderer heaterRenderer { get; private set; }
 
     // Warming effect
     public float warmthTimeInterval;
@@ -25,10 +23,14 @@ public class HeaterBehavior : MonoBehaviour
     public GameObject WarmthBarFill;
     public HeaterFuelBar heaterFuelBar;
 
-    private void Start()
+    [HideInInspector] public new Rigidbody2D rigidbody;
+
+    public void Init()
     {
         fuel = MAX_FUEL;
         heaterFuelBar.SetMaxFuel((int) MAX_FUEL);
+        rigidbody = GetComponent<Rigidbody2D>();
+        heaterRenderer = GetComponent<HeaterRenderer>();
         fuel = 10;
     }
 

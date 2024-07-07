@@ -13,12 +13,17 @@ public class Scripts : MonoBehaviour
     [SerializeField][Required] private PlayerController _Player;
     public static PlayerController Player;
 
+    [SerializeField][Required] private HeaterBehavior _Heater;
+    public static HeaterBehavior Heater;
+
     private void Start()
     {
+        Heater = _Heater;
         Player = _Player;
-        Player.Init();
-
         RoomsGenerator = _RoomsGenerator;
+
+        Player.Init();
+        Heater.Init();
         RoomsGenerator.Init();
     }
 }
