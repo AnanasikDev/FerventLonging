@@ -1,9 +1,6 @@
 using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class RoomsGenerator : MonoBehaviour
@@ -18,8 +15,9 @@ public class RoomsGenerator : MonoBehaviour
 
     [ReadOnly] public List<Room> generatedRooms = new List<Room>();
 
-    public GameObject player;
-    public float distanceThreshold;
+    [SerializeField] private Transform player;
+    [SerializeField] public float distanceGenerateThreshold;
+    [SerializeField] public float distanceDestroyThreshold;
 
     /// <summary>
     /// A dictionary holding prefab rooms as keys
@@ -44,13 +42,27 @@ public class RoomsGenerator : MonoBehaviour
         CalculateConnections();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        var rooms = generatedRooms.Where(room => (room.transform.position - player.transform.position).magnitude < distanceThreshold).ToList();
+        UpdateProcedural();
+    }
 
-        foreach (var room in rooms)
+    private void UpdateProcedural()
+    {
+        var roomsToGenerate = generatedRooms.Where(room => (room.transform.position - player.transform.position).magnitude < distanceGenerateThreshold).ToList();
+
+        foreach (var room in roomsToGenerate)
         {
             GenerateNeighbours(room);
+        }
+
+        var roomsToDestroy = generatedRooms.Where(room => (room.transform.position - player.transform.position).magnitude > distanceDestroyThreshold).ToList();
+
+        foreach (var room in roomsToDestroy)
+        {
+            generatedAmount--;
+            generatedRooms.Remove(room);
+            Destroy(room.gameObject);
         }
     }
 
@@ -181,5 +193,13 @@ public class RoomsGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(player.transform.position, distanceGenerateThreshold);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(player.transform.position, distanceDestroyThreshold);
     }
 }

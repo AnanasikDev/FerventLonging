@@ -301,8 +301,9 @@ MonoBehaviour:
   numberOfRooms: 20
   doNotRepeateParent: 1
   generatedRooms: []
-  player: {fileID: 1461498059}
-  distanceThreshold: 50
+  player: {fileID: 1461498060}
+  distanceGenerateThreshold: 30
+  distanceDestroyThreshold: 180
 --- !u!4 &1196553500
 Transform:
   m_ObjectHideFlags: 0
