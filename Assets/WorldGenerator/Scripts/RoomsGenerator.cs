@@ -192,6 +192,11 @@ public class RoomsGenerator : MonoBehaviour
                 newRoom.transform.position = position;
                 newRoom.id = generatedAmount;
 
+                var newOtherEntrance = newRoom.entrances.Find(e => e.localPosition == otherEntrance.localPosition);
+
+                parent.SetEntranceConnection(entrance, newOtherEntrance);
+                newRoom.SetEntranceConnection(newOtherEntrance, entrance);
+
                 return newRoom;
             }
         }

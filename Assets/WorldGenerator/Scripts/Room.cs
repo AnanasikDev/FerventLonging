@@ -20,12 +20,54 @@ public class Room : MonoBehaviour
     public int id;
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
+    private List<BoxCollider2D> gapsFillers = new List<BoxCollider2D>();
+
+    public static event Action onRoomDestroyedEvent;
 
     public void Init()
     {
         var obstacle = gameObject.AddComponent<NavMeshModifier>();
         obstacle.overrideArea = true;
         obstacle.area = NavMesh.GetAreaFromName("Not Walkable");
+        
+        gapsFillers = new List<BoxCollider2D>();
+        foreach (var entrance in entrances)
+        {
+            GameObject filler = new GameObject();
+            filler.transform.SetParent(transform);
+            filler.transform.position = transform.position + entrance.localPosition.ConvertTo3D();
+            var collider = filler.AddComponent<BoxCollider2D>();
+            Vector2 size = new Vector2(
+                entrance.outDirection.x == 0 ? entrance.width : 0.1f,
+                entrance.outDirection.y == 0 ? entrance.width : 0.1f
+                );
+            collider.size = size;
+            collider.offset = Vector2.zero;
+            gapsFillers.Add(collider);
+            collider.gameObject.SetActive(false);
+        }
+        FillGaps();
+        onRoomDestroyedEvent += FillGaps;
+    }
+
+    /// <summary>
+    /// Fills all unconnected entrances with colliders
+    /// </summary>
+    private void FillGaps()
+    {
+        for (int i = 0; i < gapsFillers.Count; i++)
+        {
+            if (entrances[i].connectedEntrance != null)
+                gapsFillers[i].gameObject.SetActive(false);
+            else
+                gapsFillers[i].gameObject.SetActive(true);
+        }
+    }
+
+    public void SetEntranceConnection(RoomEntrance entrance, RoomEntrance other)
+    {
+        entrance.connectedEntrance = other;
+        FillGaps();
     }
 
     public void AddSpawnedObject(GameObject spawnedObject)
@@ -65,6 +107,7 @@ public class Room : MonoBehaviour
                 Fuel.fuels.Remove(spawnedObjects[i]);
             Destroy(spawnedObjects[i]);
         }
+        onRoomDestroyedEvent?.Invoke();
     }
 }
 
