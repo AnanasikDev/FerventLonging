@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -13,7 +14,18 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float putFuelDistance = 4;
     [SerializeField] private int fuelWarmth = 7;
 
+    [SerializeField] private TextMeshProUGUI collectedFuelText;
+    [SerializeField] private string collectedFuelTextFormat;
+
+    private float minClickDelay = 0.2f;
+    private float lastTime;
+
     private Vector2 target;
+
+    public void Init()
+    {
+        lastTime = Time.time;
+    }
     
     public void UpdateInteraction()
     {
@@ -26,17 +38,22 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Scripts.Player.playerInput.isTogglePullCartPressed)
         {
-            if (isPullingCart || (transform.position - Scripts.Heater.transform.position).magnitude >= pullingDistance)
+            if (Time.time - lastTime > minClickDelay)
             {
-                isPullingCart = false;
-                Scripts.Heater.rigidbody.velocity = Vector3.zero;
-                Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.walkingSpeed);
-            }
+                if (isPullingCart || (transform.position - Scripts.Heater.transform.position).magnitude >= pullingDistance)
+                {
+                    isPullingCart = false;
+                    Scripts.Heater.rigidbody.velocity = Vector3.zero;
+                    Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.walkingSpeed);
+                }
             
-            else if (!isPullingCart && (transform.position - Scripts.Heater.transform.position).magnitude < pullingDistance)
-            {
-                isPullingCart = true;
-                Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.pullingSpeed);
+                else if (!isPullingCart && (transform.position - Scripts.Heater.transform.position).magnitude < pullingDistance)
+                {
+                    isPullingCart = true;
+                    Scripts.Player.playerMovement.SetSpeed(Scripts.Player.playerMovement.pullingSpeed);
+                }
+
+                lastTime = Time.time;
             }
         }
 
@@ -70,6 +87,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             Destroy(fuel.gameObject);
             collectedFuel++;
+            collectedFuelText.text = string.Format(collectedFuelTextFormat, collectedFuel);
         }
     }
     private bool PutFuelIntoHeater()
@@ -81,6 +99,7 @@ public class PlayerInteraction : MonoBehaviour
 
         Scripts.Heater.AddFuel(collectedFuel * fuelWarmth);
         collectedFuel = 0;
+        collectedFuelText.text = string.Format(collectedFuelTextFormat, collectedFuel);
 
         return true;
     }
