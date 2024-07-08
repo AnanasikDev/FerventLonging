@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public PlayerMovement playerMovement { get; private set; }
     public PlayerWarmth playerWarmth { get; private set; }
     public PlayerInteraction playerInteraction { get; private set; }
+    public PlayerAttack playerAttack { get; private set; }
 
     public void Init()
     {
@@ -13,9 +14,11 @@ public class PlayerController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerWarmth = GetComponent<PlayerWarmth>();
         playerInteraction = GetComponent<PlayerInteraction>();
+        playerAttack = GetComponent<PlayerAttack>();
 
         playerMovement.Init();
         playerWarmth.Init();
+        playerAttack.Init();
     }
 
     private void Update()
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
         playerInput.UpdateInput();
         playerWarmth.UpdateWarmth();
         playerInteraction.UpdateInteraction();
+        playerAttack.UpdateAttack();
     }
 
     private void FixedUpdate()

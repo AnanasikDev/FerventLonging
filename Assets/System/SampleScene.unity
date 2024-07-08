@@ -4965,6 +4965,7 @@ GameObject:
   - component: {fileID: 330084795}
   - component: {fileID: 330084794}
   - component: {fileID: 330084791}
+  - component: {fileID: 330084798}
   - component: {fileID: 330084796}
   - component: {fileID: 330084790}
   - component: {fileID: 330084792}
@@ -5226,6 +5227,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &330084798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330084787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5837fb7ff39ac4a4b8fde296261d59a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAttackDistance: 4
+  hitWarmthLoss: 12
 --- !u!1 &428342544
 GameObject:
   m_ObjectHideFlags: 0
