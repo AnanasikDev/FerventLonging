@@ -44,6 +44,7 @@ public class EnemyMotor : MonoBehaviour
         {
             agent.SetDestination(originalPosition);
             isDestinationSet = false;
+            return;
         }
     }
 

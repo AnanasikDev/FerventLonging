@@ -25,8 +25,9 @@ public class PlayerInteraction : MonoBehaviour
     public void Init()
     {
         lastTime = Time.time;
+        collectedFuelText.text = string.Format(collectedFuelTextFormat, collectedFuel);
     }
-    
+
     public void UpdateInteraction()
     {
         PullHeater();
@@ -87,6 +88,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             Destroy(fuel.gameObject);
             collectedFuel++;
+            Fuel.totalFuelCollected++;
             collectedFuelText.text = string.Format(collectedFuelTextFormat, collectedFuel);
         }
     }

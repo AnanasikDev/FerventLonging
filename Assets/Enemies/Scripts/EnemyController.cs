@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
     [ReadOnly] public EnemyMotor enemyMotor;
     [ReadOnly] public EnemyAttack enemyAttack;
 
+    public static int totalKilled = 0;
+
     public void Init()
     {
         enemies.Add(this);
@@ -29,5 +31,11 @@ public class EnemyController : MonoBehaviour
     private void OnDestroy()
     {
         enemies.Remove(this);
+    }
+
+    public void Die()
+    {
+        totalKilled++;
+        Destroy(gameObject);
     }
 }

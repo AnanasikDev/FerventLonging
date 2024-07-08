@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerWarmth : MonoBehaviour
@@ -16,6 +15,8 @@ public class PlayerWarmth : MonoBehaviour
 
     // Refs
     public WarmthBar warmthBar;
+
+    public event Action onPlayerDiedEvent;
 
 
     // Start is called before the first frame update
@@ -62,6 +63,7 @@ public class PlayerWarmth : MonoBehaviour
         if (warmth < 0)
         {
             warmth = 0;
+            onPlayerDiedEvent?.Invoke();
         }
     }
 }

@@ -18,6 +18,7 @@ public class Room : MonoBehaviour
     //[SerializeField] private GameObject collidersHandler;
 
     public int id;
+    public static int _id = 0;
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private List<BoxCollider2D> gapsFillers = new List<BoxCollider2D>();
@@ -26,6 +27,8 @@ public class Room : MonoBehaviour
 
     public void Init()
     {
+        _id++;
+
         var obstacle = gameObject.AddComponent<NavMeshModifier>();
         obstacle.overrideArea = true;
         obstacle.area = NavMesh.GetAreaFromName("Not Walkable");

@@ -6,10 +6,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float maxAttackDistance;
     [SerializeField] private int hitWarmthLoss;
 
-    public void Init()
-    {
-
-    }
+    public void Init() { }
 
     public void UpdateAttack()
     {
@@ -19,7 +16,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (enemy == null) return;
 
-        GameObject.Destroy(enemy.gameObject);
+        enemy.Die();
         Scripts.Player.playerWarmth.decreaseWarmth(hitWarmthLoss);
     }
 }
