@@ -490,11 +490,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabId: 8
   entrances:
-  - localPosition: {x: 6.5, y: -4}
-    width: 2
+  - localPosition: {x: 6, y: -4}
+    width: 3
     outDirection: {x: 0, y: -1}
-  - localPosition: {x: -6.5, y: -4}
-    width: 2
+  - localPosition: {x: -6, y: -4}
+    width: 3
     outDirection: {x: 0, y: -1}
   - localPosition: {x: -8, y: 2}
     width: 2
@@ -606,11 +606,10 @@ PolygonCollider2D:
       - {x: -7.515625, y: 0.984375}
       - {x: -7.984375, y: 0.984375}
       - {x: -7.984375, y: -3.515625}
-    - - {x: -5.484375, y: -3.984375}
-      - {x: 5.484375, y: -3.984375}
-      - {x: 5.484375, y: -0.015625}
-      - {x: -5.484375, y: -0.015625}
-      - {x: -5.484375, y: -3.609375}
+    - - {x: -4.507954, y: -3.9990053}
+      - {x: 4.496381, y: -3.995284}
+      - {x: 4.492662, y: -0.0065766573}
+      - {x: -4.4996843, y: -0.007111728}
     - - {x: 7.515625, y: -3.984375}
       - {x: 7.984375, y: -3.984375}
       - {x: 7.984375, y: 3.984375}

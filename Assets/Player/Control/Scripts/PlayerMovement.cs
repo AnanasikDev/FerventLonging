@@ -17,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void UpdateMovement()
     {
-        velocity = new Vector2(Scripts.Player.playerInput.v_horizonalAxis, Scripts.Player.playerInput.v_verticalAxis) * currentSpeed;
+        velocity = new Vector2(Scripts.Player.playerInput.v_horizonalAxis, 
+                               Scripts.Player.playerInput.v_verticalAxis) * currentSpeed;
 
         if (Scripts.Player.playerInput.v_horizonalAxis == 0 && Scripts.Player.playerInput.v_verticalAxis == 0)
         {

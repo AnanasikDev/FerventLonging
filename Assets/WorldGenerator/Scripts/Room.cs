@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using NavMeshPlus.Components;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ public class Room : MonoBehaviour
 
     public Vector2 size;
     public Bounds bounds { get { return new Bounds(transform.position.NullZ(), size.ConvertTo3D()); } }
+    [ReadOnly] public Vector2 bounds_min;
+    [ReadOnly] public Vector2 bounds_max;
 
     [Tooltip("Areas where props, fuel and enemies will be spawned")] public Area[] fillinAreas;
 
@@ -25,9 +28,18 @@ public class Room : MonoBehaviour
 
     public static event Action onRoomDestroyedEvent;
 
+    [Button]
+    public void PreInit()
+    {
+        bounds_min = bounds.min;
+        bounds_max = bounds.max;
+    }
+
     public void Init()
     {
         _id++;
+
+        PreInit();
 
         var obstacle = gameObject.AddComponent<NavMeshModifier>();
         obstacle.overrideArea = true;
@@ -58,6 +70,8 @@ public class Room : MonoBehaviour
     /// </summary>
     private void FillGaps()
     {
+        // if one entrance is smaller than another but is completely inside it, then they should be connected
+
         for (int i = 0; i < gapsFillers.Count; i++)
         {
             if (entrances[i].connectedEntrance != null)
