@@ -24,8 +24,6 @@ public class PlayerWarmth : MonoBehaviour
     {
         // Init wamrth
         warmth = MAX_WARMTH;
-        warmthBar.SetMaxWarmth((int) MAX_WARMTH);
-
     }
 
     // Update is called once per frame
@@ -35,20 +33,20 @@ public class PlayerWarmth : MonoBehaviour
         bool timeToLoseWarmth = warmthLossTimer >= warmthLossTimeInterval;
         if (timeToLoseWarmth)
         {
-            warmth -= warmthLossRate;
+            decreaseWarmth(warmthLossRate);
             warmthLossTimer -= warmthLossTimeInterval;
         }
 
         // Update UI
-        warmthBar.SetWarmth((int) warmth);
+        warmthBar.SetWarmth(warmth / MAX_WARMTH);
 
         // Update timer
         warmthLossTimer += Time.deltaTime;
     }
 
-    public void increaseWarmth(float incrementWarmth)
+    public void increaseWarmth(float value)
     {
-        warmth += incrementWarmth;
+        warmth += value;
 
         if (warmth > MAX_WARMTH)
         {
@@ -56,9 +54,9 @@ public class PlayerWarmth : MonoBehaviour
         }
     }
 
-    public void decreaseWarmth(float incrementWarmth)
+    public void decreaseWarmth(float value)
     {
-        warmth -= incrementWarmth;
+        warmth -= value;
 
         if (warmth < 0)
         {

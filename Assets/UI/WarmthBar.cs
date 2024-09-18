@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WarmthBar : MonoBehaviour
 {
-    public Slider slider;
+    [SerializeField] private Transform pointer;
+    [SerializeField] private Vector2 minMaxY;
 
-    public void SetMaxWarmth(int warmth)
+    public void SetWarmth(float rel)
     {
-        slider.maxValue = warmth;
-        slider.value = warmth;
-    }
-
-    public void SetWarmth(int warmth)
-    {
-        slider.value = warmth;
+        float y = minMaxY.x + rel * (minMaxY.y - minMaxY.x);
+        pointer.transform.localPosition = pointer.transform.localPosition.SetY(y);
     }
 }

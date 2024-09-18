@@ -8,11 +8,11 @@ public class MusicPlayer : MonoBehaviour
 
     [ReadOnly][SerializeField] private float secondsLeft = 0;
     [SerializeField] private float maxWaitFactor = 3;
-    [SerializeField] private float maxStartWaitFactor = 2;
+    [SerializeField] private float maxStartWaitSeconds = 2;
 
     private void Start()
     {
-        secondsLeft = Random.value * maxStartWaitFactor;
+        secondsLeft = Random.value * maxStartWaitSeconds;
     }
 
     private void Update()

@@ -51,10 +51,10 @@ public class HeaterBehavior : MonoBehaviour
 
         if (playerInRange() && hasFuel() && Input.GetKey(KeyCode.Space))
         {
-            enableBarWarmEffect();
+            //enableBarWarmEffect();
         } else
         {
-            disableBarWarmEffect();
+            //disableBarWarmEffect();
         }
 
         // Deplete fuel
