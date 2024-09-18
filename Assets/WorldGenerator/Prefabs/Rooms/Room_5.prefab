@@ -506,6 +506,8 @@ MonoBehaviour:
     width: 3
     outDirection: {x: 0, y: 1}
   size: {x: 4, y: 8}
+  bounds_min: {x: -2, y: -4}
+  bounds_max: {x: 2, y: 4}
   fillinAreas:
   - bounds:
       m_Center: {x: -1.24, y: -2.04, z: 0}

@@ -69,8 +69,8 @@ MonoBehaviour:
     width: 3
     outDirection: {x: 1, y: 0}
   size: {x: 16, y: 24}
-  bounds_min: {x: 0, y: 0}
-  bounds_max: {x: 0, y: 0}
+  bounds_min: {x: -8, y: -12}
+  bounds_max: {x: 8, y: 12}
   fillinAreas:
   - bounds:
       m_Center: {x: -2.88, y: -2.54, z: 0}

@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using NavMeshPlus.Components;
 using System;
 using System.Collections.Generic;
@@ -13,8 +12,6 @@ public class Room : MonoBehaviour
 
     public Vector2 size;
     public Bounds bounds { get { return new Bounds(transform.position.NullZ(), size.ConvertTo3D()); } }
-    [ReadOnly] public Vector2 bounds_min;
-    [ReadOnly] public Vector2 bounds_max;
 
     [Tooltip("Areas where props, fuel and enemies will be spawned")] public Area[] fillinAreas;
 
@@ -26,20 +23,11 @@ public class Room : MonoBehaviour
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private List<BoxCollider2D> gapsFillers = new List<BoxCollider2D>();
 
-    public static event Action onRoomDestroyedEvent;
-
-    [Button]
-    public void PreInit()
-    {
-        bounds_min = bounds.min;
-        bounds_max = bounds.max;
-    }
+    public static event Action onAnyRoomDestroyedEvent;
 
     public void Init()
     {
         _id++;
-
-        PreInit();
 
         var obstacle = gameObject.AddComponent<NavMeshModifier>();
         obstacle.overrideArea = true;
@@ -62,7 +50,7 @@ public class Room : MonoBehaviour
             collider.gameObject.SetActive(false);
         }
         FillGaps();
-        onRoomDestroyedEvent += FillGaps;
+        onAnyRoomDestroyedEvent += FillGaps;
     }
 
     /// <summary>
@@ -124,7 +112,8 @@ public class Room : MonoBehaviour
                 Fuel.fuels.Remove(spawnedObjects[i]);
             Destroy(spawnedObjects[i]);
         }
-        onRoomDestroyedEvent?.Invoke();
+        onAnyRoomDestroyedEvent -= FillGaps;
+        onAnyRoomDestroyedEvent?.Invoke();
     }
 }
 

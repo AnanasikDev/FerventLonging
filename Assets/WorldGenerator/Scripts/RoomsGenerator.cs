@@ -48,7 +48,6 @@ public class RoomsGenerator : MonoBehaviour
             var reference = Instantiate(room, Vector2.one * 100, Quaternion.identity, referenceHandler);
             reference.gameObject.SetActive(false);
             reference.gameObject.layer = 0;
-            reference.PreInit();
             prefabToReference.Add(room, reference);
         }
 
@@ -99,13 +98,13 @@ public class RoomsGenerator : MonoBehaviour
             UpdateNavMesh();
     }
 
-    public static bool DoBoundsIntersect(Vector2 bounds1_min, Vector2 bounds1_max, Vector2 bounds2_min, Vector2 bounds2_max)
+    public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
     {
         // Check overlap in the x-axis
-        bool xOverlap = bounds1_min.x < bounds2_max.x && bounds1_max.x > bounds2_min.x;
+        bool xOverlap = bounds1.min.x < bounds2.max.x && bounds1.max.x > bounds2.min.x;
 
         // Check overlap in the y-axis
-        bool yOverlap = bounds1_min.y < bounds2_max.y && bounds1_max.y > bounds2_min.y;
+        bool yOverlap = bounds1.min.y < bounds2.max.y && bounds1.max.y > bounds2.min.y;
 
         // If there's overlap in all three axes, the bounds intersect
         return xOverlap && yOverlap;
@@ -209,14 +208,9 @@ public class RoomsGenerator : MonoBehaviour
     {
         referenceRoom.transform.position = position;
 
-        //float maxSqrDistance = 100*100;
-
-        //var roomsToCheck = generatedRooms.Where(r => (r.transform.position - position.ConvertTo3D()).sqrMagnitude < maxSqrDistance).ToList();
-
         foreach (var room in generatedRooms)
         {
-            if (DoBoundsIntersect(room.bounds_min, room.bounds_max, referenceRoom.bounds_min, referenceRoom.bounds_max)) 
-                return false;
+            if (DoBoundsIntersect(room.bounds, referenceRoom.bounds)) return false;
         }
         return true;
     }
