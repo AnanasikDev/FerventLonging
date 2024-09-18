@@ -14,7 +14,8 @@ public class RoomData : ScriptableObject
 public class RoomEntrance
 {
     public Vector2 localPosition;
-    public float width;
+    [Tooltip("Width of the entrance, defines max width of object that can be fit into it. In Unity units.")] public float width;
+    [Tooltip("Depth of the entrance, usually equals depth of walls to its sides. In pixels.")] public float depth;
     public Vector2 outDirection;
     public RoomEntrance connectedEntrance;
 }

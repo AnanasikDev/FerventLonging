@@ -39,13 +39,24 @@ public class Room : MonoBehaviour
             GameObject filler = new GameObject();
             filler.transform.SetParent(transform);
             filler.transform.position = transform.position + entrance.localPosition.ConvertTo3D();
+            filler.transform.position -= entrance.outDirection.ConvertTo3D() / 2f * entrance.depth / 32f;
+            
+            // set up collisions
             var collider = filler.AddComponent<BoxCollider2D>();
             Vector2 size = new Vector2(
-                entrance.outDirection.x == 0 ? entrance.width : 0.1f,
-                entrance.outDirection.y == 0 ? entrance.width : 0.1f
+                entrance.outDirection.x == 0 ? entrance.width : entrance.depth / 32f,
+                entrance.outDirection.y == 0 ? entrance.width : entrance.depth / 32f
                 );
-            collider.size = size;
+            filler.transform.localScale = size.ConvertTo3D();
             collider.offset = Vector2.zero;
+
+            // set up rendering
+            var renderer = filler.AddComponent<SpriteRenderer>();
+            Texture2D tex = Texture2D.whiteTexture; // not black because alpha must be 1.0
+            Sprite blankWhiteSquare = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 4);
+            renderer.sprite = blankWhiteSquare;
+            renderer.color = Color.black;
+            
             gapsFillers.Add(collider);
             collider.gameObject.SetActive(false);
         }
