@@ -34,4 +34,12 @@ public class SnowShaderController : MonoBehaviour
         if (positions.Count > 1) material.SetVector("_heaterPos2", positions[1]);
         if (positions.Count > 2) material.SetVector("_heaterPos3", positions[2]);
     }
+
+    private void OnDestroy()
+    {
+        // Reset shader parameters to avoid unnecessary data updates
+        material.SetVector("_heaterPos1", Vector2.zero);
+        material.SetVector("_heaterPos2", Vector2.zero);
+        material.SetVector("_heaterPos3", Vector2.zero);
+    }
 }
