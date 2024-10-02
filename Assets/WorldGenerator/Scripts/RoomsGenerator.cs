@@ -35,6 +35,8 @@ public class RoomsGenerator : MonoBehaviour
     /// </summary>
     public Dictionary<Room, Room> prefabToReference = new Dictionary<Room, Room>();
 
+    public static event System.Action onNavMeshUpdatedEvent;
+
     public void Init()
     {
         if (!isEnabled) return;
@@ -63,7 +65,8 @@ public class RoomsGenerator : MonoBehaviour
     private void UpdateNavMesh()
     {
         //navMeshSurfaceCollider.offset = player.position;
-        navMeshSurface.BuildNavMeshAsync();
+        AsyncOperation op = navMeshSurface.BuildNavMeshAsync();
+        op.completed += (AsyncOperation asOp) => onNavMeshUpdatedEvent?.Invoke();
     }
 
     private void FixedUpdate()
@@ -261,30 +264,6 @@ public class RoomsGenerator : MonoBehaviour
             }
 
             area.isEmpty = false;
-        }
-    }
-
-    private void CalculateConnections()
-    {
-        foreach (Room r1 in generatedRooms)
-        {
-            foreach (Room r2 in generatedRooms)
-            {
-                if (r1 == r2) continue;
-
-                foreach (RoomEntrance e1 in r1.entrances)
-                {
-                    foreach (RoomEntrance e2 in r2.entrances)
-                    {
-                        if (e1.outDirection != -e2.outDirection) continue;
-                        if (e1.width != e2.width) continue;
-                        if (r1.transform.position.ConvertTo2D() + e1.localPosition != r2.transform.position.ConvertTo2D() + e2.localPosition) continue;
-
-                        e1.connectedEntrance = e2;
-                        e2.connectedEntrance = e1;
-                    }
-                }
-            }
         }
     }
 

@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,9 @@ public class EnemyMotor : MonoBehaviour
     [HideInInspector] public Vector2 originalPosition;
 
     [SerializeField][ReadOnly] private bool isDestinationSet = false;
+
+    [ShowNativeProperty] public bool isOnNavmesh { get { return agent && agent.isOnNavMesh; } }
+    [ShowNativeProperty] public bool isAgentActive { get { return isOnNavmesh && agent.hasPath && agent.pathStatus == NavMeshPathStatus.PathComplete; } }
 
     public void Init()
     {
@@ -29,7 +33,7 @@ public class EnemyMotor : MonoBehaviour
         transform.position = agent.transform.position;
         agent.transform.localPosition = Vector3.zero;
 
-        if (!agent.isOnNavMesh) return;
+        if (!isOnNavmesh) return;
 
         float distanceToHeater = (transform.position - Scripts.Heater.transform.position).magnitude;
         float playerDistanceToHeater = (Scripts.Player.transform.position - Scripts.Heater.transform.position).magnitude;
