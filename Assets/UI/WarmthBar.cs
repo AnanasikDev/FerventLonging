@@ -4,11 +4,11 @@ using UnityEngine;
 public class WarmthBar : MonoBehaviour
 {
     [SerializeField] private Transform pointer;
-    [SerializeField] private Vector2 minMaxY;
+    [SerializeField] private float maxShift;
 
     public void SetWarmth(float rel)
     {
-        float y = minMaxY.x + rel * (minMaxY.y - minMaxY.x);
-        pointer.transform.localPosition = pointer.transform.localPosition.SetY(y);
+        float x = maxShift * (1 - rel);
+        pointer.transform.localPosition = pointer.transform.localPosition.SetX(x);
     }
 }
