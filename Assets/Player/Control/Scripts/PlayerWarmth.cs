@@ -1,15 +1,16 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 
 public class PlayerWarmth : MonoBehaviour
 {
-
     // Warmth
-    public float MAX_WARMTH;
-    private float warmth;
+    public float maxWarmth;
+    [ShowNativeProperty] public float warmth { get; private set; }
+    [ShowNativeProperty] public float relativeWarmth { get { return warmth / maxWarmth; } }
 
     // Warmth depletion
-    private float warmthLossTimeInterval = 0.5f;
+    [SerializeField] private float warmthLossTimeInterval = 0.5f;
     private float warmthLossTimer = 0.0f;
     public float warmthLossRate; // per second
 
@@ -23,7 +24,7 @@ public class PlayerWarmth : MonoBehaviour
     public void Init()
     {
         // Init wamrth
-        warmth = MAX_WARMTH;
+        warmth = maxWarmth;
     }
 
     // Update is called once per frame
@@ -38,7 +39,7 @@ public class PlayerWarmth : MonoBehaviour
         }
 
         // Update UI
-        warmthBar.SetWarmth(warmth / MAX_WARMTH);
+        warmthBar.SetWarmth(relativeWarmth);
 
         // Update timer
         warmthLossTimer += Time.deltaTime;
@@ -48,9 +49,9 @@ public class PlayerWarmth : MonoBehaviour
     {
         warmth += value;
 
-        if (warmth > MAX_WARMTH)
+        if (warmth > maxWarmth)
         {
-            warmth = MAX_WARMTH;
+            warmth = maxWarmth;
         }
     }
 

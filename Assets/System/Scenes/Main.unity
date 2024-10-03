@@ -5612,7 +5612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d1aadbb4347425cbdf1eb5f76a2a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_WARMTH: 100
+  maxWarmth: 100
+  warmthLossTimeInterval: 0.5
   warmthLossRate: 1
   warmthBar: {fileID: 118331221}
 --- !u!114 &330084791
@@ -11746,7 +11747,10 @@ MonoBehaviour:
   tips: []
   sprites:
   - {fileID: 1787487000, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
+  - {fileID: 615705028, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
+  - {fileID: 988305181, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   tipPrefab: {fileID: 5339230851897579258, guid: d660ba819e271704793e69891594af17, type: 3}
+  tipSizeFactor: 0.4
 --- !u!1 &1231959856
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,17 +12,39 @@ public class TipController : MonoBehaviour
 
     [SerializeField] private Tip tipPrefab;
 
+    public float tipSizeFactor = 0.4f;
+
     public void Init()
     {
-        //Assert.AreEqual(sprites.Count, Enum.GetNames(typeof(tipType)).Length, "Number of sprites is not equal the number of defined types of tips.");
-
         AddTip(tipType.collectFuel, sprites[0], 
             () =>
             {
-                GameObject fuel = Fuel.fuels.FirstOrDefault(f => Scripts.Player.transform.position.SqrDistanceXY(f.transform.position) < 10f);
+                GameObject fuel = Fuel.fuels.FirstOrDefault(f => f && Scripts.Player.transform.position.SqrDistanceXY(f.transform.position) < 10f);
                 if (fuel != null)
                 {
-                    return (true, WorldToCanvas(fuel.transform.position.WithZ(0)));
+                    return (true, WorldToCanvas(Vector2.Lerp(fuel.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f)));
+                }
+                return (false, Vector2.zero);
+            }
+            );
+
+        AddTip(tipType.putFuel, sprites[1],
+            () =>
+            {
+                if (PlayerInteraction.collectedFuel != 0 && Scripts.Heater.transform.position.SqrDistanceXY(Scripts.Player.transform.position) < 25)
+                {
+                    return (true, WorldToCanvas(Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f)));
+                }
+                return (false, Vector2.zero);
+            }
+            );
+
+        AddTip(tipType.takeHeat, sprites[2],
+            () =>
+            {
+                if (Scripts.Player.playerWarmth.relativeWarmth < 0.7f && Scripts.Heater.transform.position.SqrDistanceXY(Scripts.Player.transform.position) < 25)
+                {
+                    return (true, WorldToCanvas(Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.45f)));
                 }
                 return (false, Vector2.zero);
             }
@@ -57,9 +79,9 @@ public enum tipType
 {
     collectFuel,
     putFuel,
-    pullCart,
     takeHeat,
-    emitHeat
+    emitHeat,
+    pullCart
 }
 
 class TipData

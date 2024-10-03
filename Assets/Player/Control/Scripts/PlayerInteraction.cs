@@ -9,7 +9,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float pullingForce = 10;
     [SerializeField] private float pullingDistance = 15;
 
-    private int collectedFuel = 0;
+    public static int collectedFuel { get; private set; } = 0;
     [SerializeField] private float collectionFuelDistance = 4;
     [SerializeField] private float putFuelDistance = 4;
     [SerializeField] private int fuelWarmth = 7;

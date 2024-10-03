@@ -36,6 +36,8 @@ public class Tip : MonoBehaviour
     public void Enable()
     {
         gameObject.SetActive(true);
+        image.SetNativeSize();
+        image.rectTransform.sizeDelta *= Scripts.TipController.tipSizeFactor;
         isActive = true;
     }
 
