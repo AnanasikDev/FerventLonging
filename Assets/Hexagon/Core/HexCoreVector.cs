@@ -360,6 +360,31 @@ public static class HexVectorUtils
     public static float SqrDistanceXY(this Vector3 a, Vector3 b) => (a - b).NullZ().sqrMagnitude;
 
     /// <summary>
+    /// Calculates the distance between two Vector2.
+    /// </summary>
+    public static float Distance(this Vector2 a, Vector2 b) => Vector2.Distance(a, b);
+
+    /// <summary>
+    /// Calculates the distance between two Vector2Int.
+    /// </summary>
+    public static float Distance(this Vector2Int a, Vector2Int b) => Vector2Int.Distance(a, b);
+
+    /// <summary>
+    /// Calculates the distance between two Vector3.
+    /// </summary>
+    public static float Distance(this Vector3 a, Vector3 b) => Vector3.Distance(a, b);
+
+    /// <summary>
+    /// Calculates the distance between two Vector3Int.
+    /// </summary>
+    public static float Distance(this Vector3Int a, Vector3Int b) => Vector3Int.Distance(a, b);
+
+    /// <summary>
+    /// Calculates the distance between two Vector3 instances in 2D space (in XY-plane).
+    /// </summary>
+    public static float DistanceXY(this Vector3 a, Vector3 b) => (a - b).NullZ().magnitude;
+
+    /// <summary>
     /// Checks if two Vector3 instances are nearly equal based on an inaccuracy tolerance.
     /// </summary>
     public static bool NearlyEquals(this Vector3 a, Vector3 b, double inaccuracy = 1.0E-5) => Vector3.SqrMagnitude(a - b) < inaccuracy;

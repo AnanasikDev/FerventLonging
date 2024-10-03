@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class TipController : MonoBehaviour
 {
@@ -16,35 +15,38 @@ public class TipController : MonoBehaviour
 
     public void Init()
     {
+        // Collect fuel tip
         AddTip(tipType.collectFuel, sprites[0], 
             () =>
             {
-                GameObject fuel = Fuel.fuels.FirstOrDefault(f => f && Scripts.Player.transform.position.SqrDistanceXY(f.transform.position) < 10f);
+                GameObject fuel = Fuel.fuels.FirstOrDefault(f => f && Scripts.Player.transform.position.DistanceXY(f.transform.position) < Scripts.Player.playerInteraction.collectionFuelDistance);
                 if (fuel != null)
                 {
-                    return (true, WorldToCanvas(Vector2.Lerp(fuel.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f)));
+                    return (true, Vector2.Lerp(fuel.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f));
                 }
                 return (false, Vector2.zero);
             }
             );
 
+        // Put fuel tip
         AddTip(tipType.putFuel, sprites[1],
             () =>
             {
-                if (PlayerInteraction.collectedFuel != 0 && Scripts.Heater.transform.position.SqrDistanceXY(Scripts.Player.transform.position) < 25)
+                if (PlayerInteraction.collectedFuel != 0 && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Player.playerInteraction.putFuelDistance)
                 {
-                    return (true, WorldToCanvas(Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f)));
+                    return (true, Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f));
                 }
                 return (false, Vector2.zero);
             }
             );
 
+        // Take heat tip
         AddTip(tipType.takeHeat, sprites[2],
             () =>
             {
-                if (Scripts.Player.playerWarmth.relativeWarmth < 0.7f && Scripts.Heater.transform.position.SqrDistanceXY(Scripts.Player.transform.position) < 25)
+                if (Scripts.Player.playerWarmth.relativeWarmth < 0.7f && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Heater.heatRadius)
                 {
-                    return (true, WorldToCanvas(Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.45f)));
+                    return (true, Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.45f));
                 }
                 return (false, Vector2.zero);
             }
@@ -54,16 +56,12 @@ public class TipController : MonoBehaviour
     private void AddTip(tipType type, Sprite sprite, Func<(bool, Vector2)> stateFunction)
     {
         var tip = Instantiate(tipPrefab);
-        tip.transform.SetParent(Scripts.Canvas.transform);
+        tip.transform.SetParent(transform);
         tip.tipType = type;
         tip.stateFunction = stateFunction;
         tip.SetSprite(sprite);
+        tip.Disable();
         tips.Add(tip);
-    }
-
-    private Vector2 WorldToCanvas(Vector3 vec)
-    {
-        return Camera.main.WorldToScreenPoint(vec);
     }
 
     private void Update()

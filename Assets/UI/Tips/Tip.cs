@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Tip : MonoBehaviour
 {
-    [SerializeField] private Image image;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     
     public tipType tipType;
     public Func<(bool, Vector2)> stateFunction;
@@ -36,13 +36,11 @@ public class Tip : MonoBehaviour
     public void Enable()
     {
         gameObject.SetActive(true);
-        image.SetNativeSize();
-        image.rectTransform.sizeDelta *= Scripts.TipController.tipSizeFactor;
         isActive = true;
     }
 
     public void SetSprite(Sprite sprite)
     {
-        image.sprite = sprite;
+        spriteRenderer.sprite = sprite;
     }
 }

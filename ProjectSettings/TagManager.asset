@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: tips
+    uniqueID: 3519053023
+    locked: 0

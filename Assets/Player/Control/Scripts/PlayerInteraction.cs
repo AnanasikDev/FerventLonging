@@ -7,11 +7,11 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField][ReadOnly] private bool isPullingCart = false;
     [SerializeField] private float pullingForce = 10;
-    [SerializeField] private float pullingDistance = 15;
+    public float pullingDistance = 15;
 
     public static int collectedFuel { get; private set; } = 0;
-    [SerializeField] private float collectionFuelDistance = 4;
-    [SerializeField] private float putFuelDistance = 4;
+    public float collectionFuelDistance = 4;
+    public float putFuelDistance = 4;
     [SerializeField] private int fuelWarmth = 7;
 
     [SerializeField] private TextMeshProUGUI collectedFuelText;
