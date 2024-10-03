@@ -52,6 +52,7 @@ public class Room : MonoBehaviour
 
             // set up rendering
             var renderer = filler.AddComponent<SpriteRenderer>();
+            renderer.sortingOrder = -1;
             Texture2D tex = Texture2D.whiteTexture; // not black because alpha must be 1.0
             Sprite blankWhiteSquare = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 4);
             renderer.sprite = blankWhiteSquare;
