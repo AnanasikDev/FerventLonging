@@ -231,9 +231,9 @@ public class RoomsGenerator : MonoBehaviour
                     Vector2[] positions = area.bounds.GenerateRandomPositionsWithinBounds(0.15f);
                     foreach (var pos in positions)
                     {
-                        var prop = Instantiate(propsPrefabs.GetRandom());
+                        var prop = Instantiate(propsPrefabs.RandomElement());
                         prop.transform.position = pos + room.transform.position.ConvertTo2D();
-                        prop.transform.position = prop.transform.position.SetZ(prop.transform.position.y / 100f);
+                        prop.transform.position = prop.transform.position.WithZ(prop.transform.position.y / 100f);
                         room.AddSpawnedObject(prop);
                     }
                 }
@@ -244,7 +244,7 @@ public class RoomsGenerator : MonoBehaviour
                 if (enemyPrefabs.Count != 0)
                 {
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
-                    var enemy = Instantiate(enemyPrefabs.GetRandom());
+                    var enemy = Instantiate(enemyPrefabs.RandomElement());
                     enemy.transform.position = position + room.transform.position.ConvertTo2D();
                     enemy.Init();
                     room.AddSpawnedObject(enemy.gameObject);
@@ -256,7 +256,7 @@ public class RoomsGenerator : MonoBehaviour
                 if (fuelPrefabs.Count != 0)
                 {
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
-                    var fuel = Instantiate(fuelPrefabs.GetRandom());
+                    var fuel = Instantiate(fuelPrefabs.RandomElement());
                     fuel.transform.position = position + room.transform.position.ConvertTo2D();
                     room.AddSpawnedObject(fuel.gameObject);
                     Fuel.fuels.Add(fuel.gameObject);

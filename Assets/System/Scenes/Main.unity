@@ -5713,7 +5713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb32b50e1289d448b788a61516c46a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commitWarmth: 32
+  commitWarmth: 101
   togglePullCart: 323
   collectFuel: 324
   putFuel: 324
@@ -11621,6 +11621,7 @@ GameObject:
   - component: {fileID: 1196553499}
   - component: {fileID: 1196553502}
   - component: {fileID: 1196553503}
+  - component: {fileID: 1196553504}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -11697,6 +11698,8 @@ MonoBehaviour:
   _RoomsGenerator: {fileID: 1196553499}
   _Player: {fileID: 330084795}
   _Heater: {fileID: 2007897582}
+  _TipController: {fileID: 1196553504}
+  _Canvas: {fileID: 487388897}
 --- !u!114 &1196553502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11728,6 +11731,22 @@ MonoBehaviour:
   particles: {fileID: 1128419781}
   scale: 1
   magnitude: 1
+--- !u!114 &1196553504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196553498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3f3122ce1875b48b6a8cc952c91fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tips: []
+  sprites:
+  - {fileID: 1787487000, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
+  tipPrefab: {fileID: 5339230851897579258, guid: d660ba819e271704793e69891594af17, type: 3}
 --- !u!1 &1231959856
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class Menu : MonoBehaviour
     private void Update()
     {
         light.transform.position = Vector3.Lerp(light.transform.position, camera.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime);
-        light.transform.position = light.transform.position.SetZ(9);
+        light.transform.position = light.transform.position.WithZ(9);
     }
 
     public void Quit()

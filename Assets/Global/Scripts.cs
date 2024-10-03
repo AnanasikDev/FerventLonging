@@ -16,14 +16,23 @@ public class Scripts : MonoBehaviour
     [SerializeField][Required] private HeaterBehavior _Heater;
     public static HeaterBehavior Heater;
 
+    [SerializeField][Required] private TipController _TipController;
+    public static TipController TipController;
+
+    [SerializeField][Required] private Canvas _Canvas;
+    public static Canvas Canvas;
+
     private void Start()
     {
         Heater = _Heater;
         Player = _Player;
         RoomsGenerator = _RoomsGenerator;
+        TipController = _TipController;
+        Canvas = _Canvas;
 
         Player.Init();
         Heater.Init();
         RoomsGenerator.Init();
+        TipController.Init();
     }
 }

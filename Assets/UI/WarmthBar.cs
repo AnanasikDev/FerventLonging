@@ -9,6 +9,6 @@ public class WarmthBar : MonoBehaviour
     public void SetWarmth(float rel)
     {
         float x = maxShift * (1 - rel);
-        pointer.transform.localPosition = pointer.transform.localPosition.SetX(x);
+        pointer.transform.localPosition = pointer.transform.localPosition.WithX(x);
     }
 }
