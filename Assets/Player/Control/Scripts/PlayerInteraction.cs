@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    [Header("Heater Cart")]
+
     [SerializeField][ReadOnly] private bool isPullingCart = false;
     [SerializeField] private float pullingForce = 10;
     public float pullingDistance = 15;
 
-    public static int collectedFuel { get; private set; } = 0;
+    [Header("Fuel interaction")]
+
     public float collectionFuelDistance = 4;
     public float putFuelDistance = 4;
-    [SerializeField] private int fuelWarmth = 7;
+    public int collectedFuel { get; private set; } = 0;
+    [Tooltip("How much warmth one fuel regenerates")][SerializeField] private int fuelWarmth = 7;
 
     [SerializeField] private TextMeshProUGUI collectedFuelText;
     [SerializeField] private string collectedFuelTextFormat;

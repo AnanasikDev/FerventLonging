@@ -32,7 +32,7 @@ public class TipController : MonoBehaviour
         AddTip(tipType.putFuel, sprites[1],
             () =>
             {
-                if (PlayerInteraction.collectedFuel != 0 && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Player.playerInteraction.putFuelDistance)
+                if (Scripts.Player.playerInteraction.collectedFuel != 0 && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Player.playerInteraction.putFuelDistance)
                 {
                     return (true, Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f));
                 }

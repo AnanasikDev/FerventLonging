@@ -5714,7 +5714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb32b50e1289d448b788a61516c46a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commitWarmth: 101
+  commitWarmth: 32
   togglePullCart: 323
   collectFuel: 324
   putFuel: 324
@@ -12183,7 +12183,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000df7cc0d1
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -12683,7 +12683,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000df7cc0d1
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -12854,7 +12854,7 @@ MonoBehaviour:
   fuel: 75
   fuelBurnRate: 1
   player: {fileID: 330084790}
-  WarmthBarFill: {fileID: 0}
+  WarmthBarFill: {fileID: 1300446024}
   heaterFuelBar: {fileID: 1039630157}
   rigidbody: {fileID: 0}
 --- !u!4 &2007897584

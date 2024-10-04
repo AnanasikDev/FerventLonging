@@ -38,7 +38,7 @@ public class HeaterBehavior : MonoBehaviour
         // Warm the player if in range
         if (isTimeToWarm())
         {
-            if (playerInRange() && hasFuel() && Input.GetKey(KeyCode.Space))
+            if (playerInRange() && hasFuel() && Scripts.Player.playerInput.isCommitWarmthPressed)
             {
                 player.increaseWarmth(warmthStrength);
             }
@@ -49,12 +49,12 @@ public class HeaterBehavior : MonoBehaviour
         // Update warming timer
         warmthTimer += Time.deltaTime;
 
-        if (playerInRange() && hasFuel() && Input.GetKey(KeyCode.Space))
+        if (playerInRange() && hasFuel() && Scripts.Player.playerInput.isCommitWarmthPressed)
         {
-            //enableBarWarmEffect();
+            enableBarWarmEffect();
         } else
         {
-            //disableBarWarmEffect();
+            disableBarWarmEffect();
         }
 
         // Deplete fuel
@@ -65,14 +65,14 @@ public class HeaterBehavior : MonoBehaviour
     private void enableBarWarmEffect()
     {
         Image image = WarmthBarFill.GetComponent<Image>();
-        image.color = new Color32(195, 100, 16, 255);
+        image.color = new Color32(176, 26, 26, 255);
     }
 
     // Makes the warmth bar back to red
     private void disableBarWarmEffect()
     {
         Image image = WarmthBarFill.GetComponent<Image>();
-        image.color = new Color32(176, 26, 26, 255);
+        image.color = new Color32(192, 83, 4, 255);
     }
 
     private void depleteFuel()
