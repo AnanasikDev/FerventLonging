@@ -51,6 +51,20 @@ public class TipController : MonoBehaviour
                 return (false, Vector2.zero);
             }
             );
+
+        // Take heat tip
+        AddTip(tipType.emitHeat, sprites[3],
+            () =>
+            {
+                var enemy = EnemyController.enemies.FirstOrDefault(e => e && Scripts.Player.transform.position.DistanceXY(e.transform.position) < Scripts.Player.playerAttack.maxAttackDistance);
+
+                if (enemy && Scripts.Player.playerWarmth.relativeWarmth > 0.2f && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) > Scripts.Heater.heatRadius * 1.5f)
+                {
+                    return (true, Vector2.Lerp(enemy.transform.position.NullZ(), Scripts.Player.transform.position.NullZ(), 0.2f));
+                }
+                return (false, Vector2.zero);
+            }
+            );
     }
     
     private void AddTip(tipType type, Sprite sprite, Func<(bool, Vector2)> stateFunction)

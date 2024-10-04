@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float maxAttackDistance;
-    [SerializeField] private int hitWarmthLoss;
+    public float maxAttackDistance;
+    public int hitWarmthLoss;
 
     public void Init() { }
 

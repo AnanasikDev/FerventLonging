@@ -4954,6 +4954,7 @@ GameObject:
   - component: {fileID: 425514460600222967}
   - component: {fileID: 4430811353041531812}
   - component: {fileID: 7186697688510412985}
+  - component: {fileID: 4814768054521793318}
   m_Layer: 0
   m_Name: EnemyPrefab
   m_TagString: Untagged
@@ -5027,6 +5028,41 @@ MonoBehaviour:
   attackDelay: 1.25
   warmthDamage: 5
   attackParticles: {fileID: 3446757057633023101}
+--- !u!58 &4814768054521793318
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056585273479984515}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.13311356}
+  serializedVersion: 2
+  m_Radius: 0.39541072
 --- !u!1 &3721118156671856264
 GameObject:
   m_ObjectHideFlags: 0

@@ -5630,7 +5630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingSpeed: 0.065
-  pullingSpeed: 0.0425
+  pullingSpeed: 0.04
   currentSpeed: 0
   velocity: {x: 0, y: 0}
 --- !u!212 &330084792
@@ -5756,7 +5756,7 @@ MonoBehaviour:
   pullingDistance: 18
   collectionFuelDistance: 1.5
   putFuelDistance: 4
-  fuelWarmth: 7
+  fuelWarmth: 8
   collectedFuelText: {fileID: 165006109}
   collectedFuelTextFormat: 'Collected fuel: {0}'
 --- !u!95 &330084797
@@ -5792,7 +5792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5837fb7ff39ac4a4b8fde296261d59a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAttackDistance: 4
+  maxAttackDistance: 2.4
   hitWarmthLoss: 12
 --- !u!114 &330084799
 MonoBehaviour:
@@ -11849,6 +11849,7 @@ MonoBehaviour:
   - {fileID: 1787487000, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   - {fileID: 615705028, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   - {fileID: 988305181, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
+  - {fileID: 1160730366, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   tipPrefab: {fileID: 5339230851897579258, guid: d660ba819e271704793e69891594af17, type: 3}
   tipSizeFactor: 0.4
 --- !u!1 &1231959856
@@ -13048,7 +13049,7 @@ MonoBehaviour:
   warmthStrength: 7
   heatRadius: 4.5
   MAX_FUEL: 100
-  fuel: 75
+  fuel: 100
   fuelBurnRate: 1
   player: {fileID: 330084790}
   WarmthBarFill: {fileID: 1300446024}
