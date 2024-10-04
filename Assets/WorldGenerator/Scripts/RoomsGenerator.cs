@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using NavMeshPlus.Components;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class RoomsGenerator : MonoBehaviour
@@ -21,7 +23,7 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] public float distanceGenerateThreshold;
     [SerializeField] public float distanceDestroyThreshold;
 
-    [SerializeField] private List<GameObject> propsPrefabs;
+    [SerializeField] private List<Prop> propsPrefabs;
     [SerializeField] private List<Fuel> fuelPrefabs;
     [SerializeField] private List<EnemyController> enemyPrefabs;
 
@@ -44,6 +46,15 @@ public class RoomsGenerator : MonoBehaviour
         InitNavMesh();
 
         generatedAmount = 0;
+
+        for (int i = 0; i < propsPrefabs.Count; i++)
+            propsPrefabs[i].id = i;
+
+        for (int i = 0; i < fuelPrefabs.Count; i++)
+            fuelPrefabs[i].id = i;
+
+        for (int i = 0; i < enemyPrefabs.Count; i++)
+            enemyPrefabs[i].id = i;
 
         foreach (var room in roomPrefabs)
         {
@@ -231,10 +242,16 @@ public class RoomsGenerator : MonoBehaviour
                     Vector2[] positions = area.bounds.GenerateRandomPositionsWithinBounds(0.15f);
                     foreach (var pos in positions)
                     {
-                        var prop = Instantiate(propsPrefabs.RandomElement());
+                        var propPrefab = propsPrefabs.RandomElement();
+
+                        // try pull out of the pool
+                        var prop = World.props.FirstOrDefault(e => e.gameObject.activeSelf && e.id == propPrefab.id); // if needed can be checked to match desired prefab
+                        if (prop == null)
+                            prop = Instantiate(propPrefab);
+
                         prop.transform.position = pos + room.transform.position.ConvertTo2D();
                         prop.transform.position = prop.transform.position.WithZ(prop.transform.position.y / 100f);
-                        room.AddSpawnedObject(prop);
+                        room.AddSpawnedObject(prop.gameObject);
                     }
                 }
             }
@@ -244,7 +261,12 @@ public class RoomsGenerator : MonoBehaviour
                 if (enemyPrefabs.Count != 0)
                 {
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
-                    var enemy = Instantiate(enemyPrefabs.RandomElement());
+
+                    // try pull out of the pool
+                    var enemy = World.enemies.FirstOrDefault(e => e.gameObject.activeSelf); // if needed can be checked to match desired prefab
+                    if (enemy == null) 
+                        enemy = Instantiate(enemyPrefabs.RandomElement());
+
                     enemy.transform.position = position + room.transform.position.ConvertTo2D();
                     enemy.Init();
                     room.AddSpawnedObject(enemy.gameObject);
@@ -256,7 +278,11 @@ public class RoomsGenerator : MonoBehaviour
                 if (fuelPrefabs.Count != 0)
                 {
                     Vector2 position = area.bounds.GenerateRandomPositionWithinBounds();
-                    var fuel = Instantiate(fuelPrefabs.RandomElement());
+
+                    // try pull out of the pool
+                    var fuel = World.fuels.FirstOrDefault(f => f.gameObject.activeSelf); // can be chosed fuel of the same type or prefab
+                    if (fuel == null) fuel = Instantiate(fuelPrefabs.RandomElement());
+
                     fuel.transform.position = position + room.transform.position.ConvertTo2D();
                     room.AddSpawnedObject(fuel.gameObject);
                     Fuel.fuels.Add(fuel.gameObject);

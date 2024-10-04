@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, PrefabID
 {
     public static List<EnemyController> enemies = new List<EnemyController>();
 
@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     [ReadOnly] public EnemyAttack enemyAttack;
 
     public static int totalKilled = 0;
+
+    public int id { get; set; }
 
     public void Init()
     {

@@ -121,9 +121,7 @@ public class Room : MonoBehaviour
         onAnyRoomDestroyedEvent -= FillGaps;
         for (int i = 0; i < spawnedObjects.Count; i++)
         {
-            if (spawnedObjects[i].gameObject.CompareTag("Fuel"))
-                Fuel.fuels.Remove(spawnedObjects[i]);
-            Destroy(spawnedObjects[i]);
+            spawnedObjects[i].SetActive(false);
         }
         onAnyRoomDestroyedEvent?.Invoke();
     }
