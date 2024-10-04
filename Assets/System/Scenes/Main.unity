@@ -11850,6 +11850,7 @@ MonoBehaviour:
   - {fileID: 615705028, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   - {fileID: 988305181, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   - {fileID: 1160730366, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
+  - {fileID: 2016785422, guid: 8de29eb283936e9429a06ca63512021f, type: 3}
   tipPrefab: {fileID: 5339230851897579258, guid: d660ba819e271704793e69891594af17, type: 3}
   tipSizeFactor: 0.4
 --- !u!1 &1231959856

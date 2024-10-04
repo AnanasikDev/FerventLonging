@@ -32,7 +32,9 @@ public class TipController : MonoBehaviour
         AddTip(tipType.putFuel, sprites[1],
             () =>
             {
-                if (Scripts.Player.playerInteraction.collectedFuel != 0 && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Player.playerInteraction.putFuelDistance)
+                if (Scripts.Player.playerInteraction.collectedFuel != 0 &&
+                Scripts.Player.playerWarmth.relativeWarmth > 0.35f && 
+                Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Player.playerInteraction.putFuelDistance)
                 {
                     return (true, Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.2f));
                 }
@@ -44,7 +46,7 @@ public class TipController : MonoBehaviour
         AddTip(tipType.takeHeat, sprites[2],
             () =>
             {
-                if (Scripts.Player.playerWarmth.relativeWarmth < 0.7f && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Heater.heatRadius)
+                if (Scripts.Player.playerWarmth.relativeWarmth < 0.5f && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Heater.heatRadius)
                 {
                     return (true, Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.45f));
                 }
@@ -52,7 +54,7 @@ public class TipController : MonoBehaviour
             }
             );
 
-        // Take heat tip
+        // Emit heat tip
         AddTip(tipType.emitHeat, sprites[3],
             () =>
             {
@@ -61,6 +63,21 @@ public class TipController : MonoBehaviour
                 if (enemy && Scripts.Player.playerWarmth.relativeWarmth > 0.2f && Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) > Scripts.Heater.heatRadius * 1.5f)
                 {
                     return (true, Vector2.Lerp(enemy.transform.position.NullZ(), Scripts.Player.transform.position.NullZ(), 0.2f));
+                }
+                return (false, Vector2.zero);
+            }
+            );
+
+        // Pull cart tip
+        AddTip(tipType.pullCart, sprites[4],
+            () =>
+            {
+                if (!Scripts.Player.playerInteraction.isPullingCart && 
+                Scripts.Player.playerInteraction.collectedFuel == 0 &&
+                Scripts.Player.playerWarmth.relativeWarmth >= 0.7f && 
+                Scripts.Heater.transform.position.DistanceXY(Scripts.Player.transform.position) < Scripts.Player.playerInteraction.pullingDistance)
+                {
+                    return (true, Vector2.Lerp(Scripts.Heater.transform.position.WithZ(0), Scripts.Player.transform.position, 0.45f));
                 }
                 return (false, Vector2.zero);
             }

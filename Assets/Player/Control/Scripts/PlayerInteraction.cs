@@ -6,9 +6,8 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Heater Cart")]
-
-    [SerializeField][ReadOnly] private bool isPullingCart = false;
     [SerializeField] private float pullingForce = 10;
+    [ShowNativeProperty] public bool isPullingCart { get; private set; } = false;
     public float pullingDistance = 15;
 
     [Header("Fuel interaction")]
