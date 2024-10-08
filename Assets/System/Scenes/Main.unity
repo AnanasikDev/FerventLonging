@@ -5570,7 +5570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxWarmth: 100
   warmthLossTimeInterval: 0.5
-  warmthLossRate: 0
+  warmthLossRate: 1
   warmthBar: {fileID: 118331221}
 --- !u!114 &330084791
 MonoBehaviour:
@@ -6306,7 +6306,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 1
   m_VoxelSize: 0.2
   m_BuildHeightMesh: 0
-  m_HideEditorLogs: 0
+  m_HideEditorLogs: 1
   m_NavMeshData: {fileID: 0}
 --- !u!1 &637057695
 GameObject:
@@ -12466,7 +12466,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653941861}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7cbfff239ac1daa428c95438da2f89c2, type: 3}

@@ -74,7 +74,6 @@ public class Room : MonoBehaviour
     {
         CalculateBounds();
         gameObject.SetActive(true);
-        onAnyRoomEnabledEvent += FillGaps;
         onAnyRoomDisabledEvent += FillGaps;
         FillGaps();
         foreach (var obj in spawnedObjects)
@@ -87,7 +86,6 @@ public class Room : MonoBehaviour
     {
         gameObject.SetActive(false);
         onAnyRoomDisabledEvent -= FillGaps;
-        onAnyRoomEnabledEvent -= FillGaps;
         gameObject.name = "spare in pool";
         foreach (var e in entrances)
         {
@@ -101,8 +99,9 @@ public class Room : MonoBehaviour
     /// <summary>
     /// Fills all unconnected entrances with colliders
     /// </summary>
-    private void FillGaps()
+    public void FillGaps()
     {
+        if (this == null) return;
         for (int i = 0; i < gapsFillers.Count; i++)
         {
             if (entrances[i].connectedEntrance != null)

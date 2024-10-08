@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RoomsGenerator : MonoBehaviour
 {
@@ -130,6 +131,12 @@ public class RoomsGenerator : MonoBehaviour
         }
 
         if (change > 0)
+        foreach (var room in roomPool.objects)
+        {
+            if (room.gameObject.activeSelf) room.FillGaps();
+        }
+
+        if (change > 0)
             UpdateNavMesh();
     }
 
@@ -139,7 +146,10 @@ public class RoomsGenerator : MonoBehaviour
 
         // 0 - 2 for the reason of creating the
         // first room big enough for the heater to fit
-        var first = CreateRoom(roomPrefabs[Random.Range(0, 2)], Vector2.zero);
+        Room first = Instantiate(roomPrefabs[Random.Range(0, 2)], Vector2.zero, Quaternion.identity);
+        first.name += $" [INITIAL]";
+        first.transform.SetParent(transform);
+        generatedAmount++;
         first.Init();
         first.Enable();
         generatedRooms.Add(first);
@@ -195,6 +205,7 @@ public class RoomsGenerator : MonoBehaviour
                 if (!roomPool.TryTakeInactive(out newRoom, r => r.prefabId == prefab.prefabId))
                 {
                     newRoom = Instantiate(prefab, transform);
+                    newRoom.prefabId = prefab.prefabId;
                     newRoom.Init();
                     roomPool.RecordNew(newRoom);
                 }
@@ -280,13 +291,6 @@ public class RoomsGenerator : MonoBehaviour
         }
     }
 
-    private Room CreateRoom(Room prefab, Vector2 position)
-    {
-        Room r = Instantiate(prefab, position, Quaternion.identity);
-        r.name += $" [{generatedAmount}]";
-        generatedAmount++;
-        return r;
-    }
     public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
     {
         // Check overlap in the x-axis
