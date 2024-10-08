@@ -128,7 +128,7 @@ public class RoomsGenerator : MonoBehaviour
             //Destroy(room.gameObject);
         }
 
-        if (change > 0)
+        if (change > 0 || change - generatedAmount > 0)
             UpdateNavMesh();
     }
 
