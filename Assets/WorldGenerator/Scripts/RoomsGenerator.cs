@@ -141,6 +141,7 @@ public class RoomsGenerator : MonoBehaviour
         // first room big enough for the heater to fit
         var first = CreateRoom(roomPrefabs[Random.Range(0, 2)], Vector2.zero);
         first.Init();
+        first.Enable();
         generatedRooms.Add(first);
         queue.Enqueue(first);
 

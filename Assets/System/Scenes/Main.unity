@@ -5570,7 +5570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxWarmth: 100
   warmthLossTimeInterval: 0.5
-  warmthLossRate: 1
+  warmthLossRate: 0
   warmthBar: {fileID: 118331221}
 --- !u!114 &330084791
 MonoBehaviour:
@@ -5777,7 +5777,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.85
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -12466,7 +12466,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653941861}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7cbfff239ac1daa428c95438da2f89c2, type: 3}
@@ -12570,7 +12570,7 @@ MonoBehaviour:
   audioSource: {fileID: 1653941862}
   track: {fileID: 8300000, guid: 7cbfff239ac1daa428c95438da2f89c2, type: 3}
   secondsLeft: 0
-  maxWaitFactor: 1.9
+  maxWaitFactor: 1.4
   maxStartWaitSeconds: 0.4
 --- !u!4 &1653941864
 Transform:
@@ -12597,7 +12597,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 008fbea0f4b1e014cb7c42a86516f84c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6ccc7016088cd2f4db51c32e36e14411, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.77
   m_Pitch: 1

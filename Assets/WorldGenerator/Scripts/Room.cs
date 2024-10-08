@@ -24,7 +24,8 @@ public class Room : MonoBehaviour
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private List<BoxCollider2D> gapsFillers = new List<BoxCollider2D>();
 
-    public static event Action onAnyRoomDestroyedEvent;
+    public static event Action onAnyRoomDisabledEvent;
+    public static event Action onAnyRoomEnabledEvent;
 
     public void Init()
     {
@@ -73,15 +74,28 @@ public class Room : MonoBehaviour
     {
         CalculateBounds();
         gameObject.SetActive(true);
-        onAnyRoomDestroyedEvent += FillGaps;
+        onAnyRoomEnabledEvent += FillGaps;
+        onAnyRoomDisabledEvent += FillGaps;
         FillGaps();
+        foreach (var obj in spawnedObjects)
+            obj.transform.position = obj.transform.position.WithZ(obj.transform.position.y / 100f);
+
+        onAnyRoomEnabledEvent?.Invoke();
     }
 
     public void Disable()
     {
         gameObject.SetActive(false);
-        onAnyRoomDestroyedEvent -= FillGaps;
+        onAnyRoomDisabledEvent -= FillGaps;
+        onAnyRoomEnabledEvent -= FillGaps;
         gameObject.name = "spare in pool";
+        foreach (var e in entrances)
+        {
+            if (e.connectedEntrance != null) e.connectedEntrance.connectedEntrance = null;
+            e.connectedEntrance = null;
+        }
+
+        onAnyRoomDisabledEvent?.Invoke();
     }
 
     /// <summary>
@@ -89,8 +103,6 @@ public class Room : MonoBehaviour
     /// </summary>
     private void FillGaps()
     {
-        // if one entrance is smaller than another but is completely inside it, then they should be connected
-
         for (int i = 0; i < gapsFillers.Count; i++)
         {
             if (entrances[i].connectedEntrance != null)
@@ -103,7 +115,6 @@ public class Room : MonoBehaviour
     public void SetEntranceConnection(RoomEntrance entrance, RoomEntrance other)
     {
         entrance.connectedEntrance = other;
-        FillGaps();
     }
 
     public void AddSpawnedObject(GameObject spawnedObject)
@@ -133,16 +144,6 @@ public class Room : MonoBehaviour
             if (area.areaType == AreaType.Enemies) Gizmos.color = new Color(255, 64, 0);
             Gizmos.DrawWireCube(area.bounds.center + transform.position, area.bounds.size);
         }
-    }
-
-    private void OnDestroy()
-    {
-        onAnyRoomDestroyedEvent -= FillGaps;
-        for (int i = 0; i < spawnedObjects.Count; i++)
-        {
-            spawnedObjects[i].SetActive(false);
-        }
-        onAnyRoomDestroyedEvent?.Invoke();
     }
 }
 
