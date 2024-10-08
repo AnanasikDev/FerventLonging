@@ -41,7 +41,7 @@ public class EnemyAttack : MonoBehaviour
 
         if (Mathf.Abs(Mathf.Repeat(targetAngle, 360) - enemyController.enemyMotor.agent.transform.eulerAngles.z) < 70 ||
             (transform.position - Scripts.Player.transform.position).magnitude < 0.8f)
-        { 
+        {
             Scripts.Player.playerWarmth.decreaseWarmth(warmthDamage);
         }
 
