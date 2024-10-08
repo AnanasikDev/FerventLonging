@@ -5012,6 +5012,7 @@ MonoBehaviour:
   maxFollowDistance: 8
   originalPosition: {x: 0, y: 0}
   isDestinationSet: 0
+  trail: {fileID: 7079581783316156020}
 --- !u!114 &7186697688510412985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5221,7 +5222,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Time: 0.5
+  m_Time: 0.7
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3

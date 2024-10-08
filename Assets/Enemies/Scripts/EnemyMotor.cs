@@ -17,15 +17,19 @@ public class EnemyMotor : MonoBehaviour
     [ShowNativeProperty] public bool isOnNavmesh { get { return agent && agent.isOnNavMesh; } }
     [ShowNativeProperty] public bool isAgentActive { get { return isOnNavmesh && agent.hasPath && agent.pathStatus == NavMeshPathStatus.PathComplete; } }
 
+    [SerializeField] private GameObject trail;
+
     public void Init()
     {
         player = Scripts.Player.transform;
         originalPosition = transform.position;
+        trail.gameObject.SetActive(false);
 
         agent.enabled = false;
         agent.transform.position = transform.position;
         agent.transform.localPosition = Vector3.zero;
         agent.enabled = true;
+        trail.gameObject.SetActive(true);
     }
 
     public void UpdateMotor()

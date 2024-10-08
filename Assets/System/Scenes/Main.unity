@@ -12570,7 +12570,7 @@ MonoBehaviour:
   audioSource: {fileID: 1653941862}
   track: {fileID: 8300000, guid: 7cbfff239ac1daa428c95438da2f89c2, type: 3}
   secondsLeft: 0
-  maxWaitFactor: 1.4
+  maxWaitFactor: 1.5
   maxStartWaitSeconds: 0.4
 --- !u!4 &1653941864
 Transform:
