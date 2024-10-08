@@ -16,8 +16,6 @@ public class Room : MonoBehaviour
 
     [Tooltip("Areas where props, fuel and enemies will be spawned")] public Area[] fillinAreas;
 
-    //[SerializeField] private GameObject collidersHandler;
-
     public int id;
     public static int _id = 0;
 

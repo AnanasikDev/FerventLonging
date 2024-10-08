@@ -1,10 +1,7 @@
 using NaughtyAttributes;
-using NavMeshPlus.Components;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class RoomsGenerator : MonoBehaviour
 {
@@ -66,13 +63,14 @@ public class RoomsGenerator : MonoBehaviour
             var reference = Instantiate(prefab, Vector2.one * 100, Quaternion.identity, referenceHandler);
             reference.gameObject.SetActive(false);
             reference.gameObject.layer = 0;
-            //prefab.Init();
             prefabToReference.Add(prefab, reference);
         }
 
         Generate();
-
-        //CalculateConnections();
+        foreach (var room in roomPool.objects)
+        {
+            if (room.gameObject.activeSelf) room.FillGaps();
+        }
     }
     private void InitNavMesh()
     {
@@ -131,12 +129,6 @@ public class RoomsGenerator : MonoBehaviour
         }
 
         if (change > 0)
-        foreach (var room in roomPool.objects)
-        {
-            if (room.gameObject.activeSelf) room.FillGaps();
-        }
-
-        if (change > 0)
             UpdateNavMesh();
     }
 
@@ -151,6 +143,7 @@ public class RoomsGenerator : MonoBehaviour
         first.transform.SetParent(transform);
         generatedAmount++;
         first.Init();
+        roomPool.RecordNew(first);
         first.Enable();
         generatedRooms.Add(first);
         queue.Enqueue(first);
