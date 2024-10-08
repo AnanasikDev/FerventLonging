@@ -13,6 +13,7 @@ public class RoomsGenerator : MonoBehaviour
     [SerializeField] private int numberOfRooms = 40;
     [ShowNonSerializedField][ReadOnly]
     private int generatedAmount = 0;
+    private Pool<Room> roomPool;
 
     [Tooltip("If true, children must be different from the parent")][SerializeField] 
     private bool doNotRepeateParent = true;
@@ -44,6 +45,7 @@ public class RoomsGenerator : MonoBehaviour
         if (!isEnabled) return;
 
         roomPrefabNumber = roomPrefabs.Count;
+        roomPool = new Pool<Room>(r => r.gameObject.activeSelf);
 
         InitNavMesh();
 
@@ -58,28 +60,39 @@ public class RoomsGenerator : MonoBehaviour
         for (int i = 0; i < enemyPrefabs.Count; i++)
             enemyPrefabs[i].id = i;
 
-        foreach (var room in roomPrefabs)
+        foreach (var prefab in roomPrefabs)
         {
-            var reference = Instantiate(room, Vector2.one * 100, Quaternion.identity, referenceHandler);
+            var reference = Instantiate(prefab, Vector2.one * 100, Quaternion.identity, referenceHandler);
             reference.gameObject.SetActive(false);
             reference.gameObject.layer = 0;
-            prefabToReference.Add(room, reference);
+            //prefab.Init();
+            prefabToReference.Add(prefab, reference);
         }
 
         Generate();
 
         //CalculateConnections();
     }
-
     private void InitNavMesh()
     {
         navMeshSurface.BuildNavMesh();
     }
-    private void UpdateNavMesh()
+    void generateOnInit(Queue<Room> queue)
     {
-        //navMeshSurfaceCollider.offset = player.position;
-        AsyncOperation op = navMeshSurface.BuildNavMeshAsync();
-        op.completed += (AsyncOperation asOp) => onNavMeshUpdatedEvent?.Invoke();
+        if (generatedAmount >= numberOfRooms) return;
+
+        if (queue.Count == 0) return;
+        var room = queue.Dequeue();
+
+        var newRooms = GenerateNeighbours(room);
+        foreach (var newRoom in newRooms)
+        {
+            newRoom.name += $" [{generatedAmount}] (parent:{room.id})";
+            generatedAmount++;
+            queue.Enqueue(newRoom);
+        }
+
+        generateOnInit(queue);
     }
 
     private void FixedUpdate()
@@ -87,7 +100,12 @@ public class RoomsGenerator : MonoBehaviour
         if (!isEnabled) return;
         UpdateProcedural();
     }
-
+    private void UpdateNavMesh()
+    {
+        //navMeshSurfaceCollider.offset = player.position;
+        AsyncOperation op = navMeshSurface.BuildNavMeshAsync();
+        op.completed += (AsyncOperation asOp) => onNavMeshUpdatedEvent?.Invoke();
+    }
     private void UpdateProcedural()
     {
         int change = generatedAmount;
@@ -107,23 +125,12 @@ public class RoomsGenerator : MonoBehaviour
         {
             generatedAmount--;
             generatedRooms.Remove(room);
-            Destroy(room.gameObject);
+            room.Disable();
+            //Destroy(room.gameObject);
         }
 
-        if (change > 0)
-            UpdateNavMesh();
-    }
-
-    public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
-    {
-        // Check overlap in the x-axis
-        bool xOverlap = bounds1.min.x < bounds2.max.x && bounds1.max.x > bounds2.min.x;
-
-        // Check overlap in the y-axis
-        bool yOverlap = bounds1.min.y < bounds2.max.y && bounds1.max.y > bounds2.min.y;
-
-        // If there's overlap in all three axes, the bounds intersect
-        return xOverlap && yOverlap;
+        //if (change > 0)
+        //    UpdateNavMesh();
     }
 
     private void Generate()
@@ -132,35 +139,15 @@ public class RoomsGenerator : MonoBehaviour
 
         // 0 - 2 for the reason of creating the
         // first room big enough for the heater to fit
-        var first = Instantiate(roomPrefabs[Random.Range(0, 2)], Vector2.zero, Quaternion.identity);
-        first.name += $" [{generatedAmount}]";
+        var first = CreateRoom(roomPrefabs[Random.Range(0, 2)], Vector2.zero);
         first.Init();
         generatedRooms.Add(first);
         queue.Enqueue(first);
 
         generatedAmount = 1;
 
-        gen(queue);
+        generateOnInit(queue);
     }
-
-    void gen(Queue<Room> queue)
-    {
-        if (generatedAmount >= numberOfRooms) return;
-
-        if (queue.Count == 0) return;
-        var room = queue.Dequeue();
-
-        var newRooms = GenerateNeighbours(room);
-        foreach (var newRoom in newRooms)
-        {
-            newRoom.name += $" [{generatedAmount}] (parent:{room.id})";
-            generatedAmount++;
-            queue.Enqueue(newRoom);
-        }
-
-        gen(queue);
-    }
-
     private List<Room> GenerateNeighbours(Room parent)
     {
         List<Room> result = new List<Room>();
@@ -170,7 +157,7 @@ public class RoomsGenerator : MonoBehaviour
             var newRoom = GenerateForEntrance(entrance, parent);
             if (newRoom != null)
             {
-                newRoom.Init();
+                newRoom.Enable();
                 result.Add(newRoom);
                 generatedRooms.Add(newRoom);
                 generatedAmount++;
@@ -180,7 +167,6 @@ public class RoomsGenerator : MonoBehaviour
 
         return result;
     }
-
     private Room GenerateForEntrance(RoomEntrance entrance, Room parent)
     {
         if (entrance.connectedEntrance != null) return null;
@@ -188,23 +174,29 @@ public class RoomsGenerator : MonoBehaviour
         int i = 0;
         while (true)
         {
-            Room other = roomPrefabs.RandomElement();
-            foreach (RoomEntrance otherEntrance in other.entrances)
+            Room prefab = roomPrefabs.RandomElement();
+            foreach (RoomEntrance otherEntrance in prefab.entrances)
             {
-                if (doNotRepeateParent && parent.prefabId == other.prefabId) continue; 
+                if (doNotRepeateParent && parent.prefabId == prefab.prefabId) continue; 
 
                 if (otherEntrance.outDirection != -entrance.outDirection) continue;
                 if (otherEntrance.width != entrance.width) continue;
 
-                var reference = Scripts.RoomsGenerator.prefabToReference[other];
+                var reference = Scripts.RoomsGenerator.prefabToReference[prefab];
 
                 Vector2 position = (parent.transform.position.ConvertTo2D() + entrance.localPosition) - otherEntrance.localPosition;
 
-                bool free = IsSpaceFree(reference, position, parent.id);
+                bool free = IsSpaceFree(reference, position);
 
                 if (!free) continue;
 
-                Room newRoom = Instantiate(other, transform);
+                Room newRoom;
+                if (!roomPool.TryTakeInactive(out newRoom, r => r.prefabId == prefab.prefabId))
+                {
+                    newRoom = Instantiate(prefab, transform);
+                    newRoom.Init();
+                    roomPool.RecordNew(newRoom);
+                }
                 newRoom.transform.position = position;
                 newRoom.id = generatedAmount;
 
@@ -221,19 +213,6 @@ public class RoomsGenerator : MonoBehaviour
 
         return null;
     }
-
-    private bool IsSpaceFree(Room referenceRoom, Vector2 position, int parentid)
-    {
-        referenceRoom.transform.position = position;
-        referenceRoom.bounds = new Bounds(position, referenceRoom.size.ConvertTo3D());
-
-        foreach (var room in generatedRooms)
-        {
-            if (DoBoundsIntersect(room.bounds, referenceRoom.bounds)) return false;
-        }
-        return true;
-    }
-
     private void FillRoomAreas(Room room)
     {
         foreach (var area in room.fillinAreas)
@@ -299,6 +278,37 @@ public class RoomsGenerator : MonoBehaviour
             area.isEmpty = false;
         }
     }
+
+    private Room CreateRoom(Room prefab, Vector2 position)
+    {
+        Room r = Instantiate(prefab, position, Quaternion.identity);
+        r.name += $" [{generatedAmount}]";
+        generatedAmount++;
+        return r;
+    }
+    public static bool DoBoundsIntersect(Bounds bounds1, Bounds bounds2)
+    {
+        // Check overlap in the x-axis
+        bool xOverlap = bounds1.min.x < bounds2.max.x && bounds1.max.x > bounds2.min.x;
+
+        // Check overlap in the y-axis
+        bool yOverlap = bounds1.min.y < bounds2.max.y && bounds1.max.y > bounds2.min.y;
+
+        // If there's overlap in all three axes, the bounds intersect
+        return xOverlap && yOverlap;
+    }
+    private bool IsSpaceFree(Room referenceRoom, Vector2 position)
+    {
+        referenceRoom.transform.position = position;
+        referenceRoom.CalculateBounds();
+
+        foreach (var room in generatedRooms)
+        {
+            if (DoBoundsIntersect(room.bounds, referenceRoom.bounds)) return false;
+        }
+        return true;
+    }
+
 
     private void OnDrawGizmos()
     {

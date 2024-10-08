@@ -452,6 +452,8 @@ GameObject:
   - component: {fileID: 7820584686063173852}
   - component: {fileID: 7936762091944300689}
   - component: {fileID: 8962051726482945861}
+  - component: {fileID: -2417839711373469331}
+  - component: {fileID: -3935748337591470147}
   m_Layer: 3
   m_Name: Room_4
   m_TagString: Untagged
@@ -511,6 +513,9 @@ MonoBehaviour:
     depth: 7
     outDirection: {x: 0, y: 1}
   size: {x: 4, y: 8}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 2, y: 4, z: 0}
   fillinAreas:
   - bounds:
       m_Center: {x: -1.24, y: -2.04, z: 0}
@@ -652,3 +657,35 @@ PolygonCollider2D:
       - {x: -1.9794657, y: 2.0231266}
       - {x: -1.7964853, y: 2.0209486}
   m_UseDelaunayMesh: 0
+--- !u!114 &-2417839711373469331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7190611775635885693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
+--- !u!114 &-3935748337591470147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7190611775635885693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

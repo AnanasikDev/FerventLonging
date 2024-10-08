@@ -62,10 +62,26 @@ public class Room : MonoBehaviour
             gapsFillers.Add(collider);
             collider.gameObject.SetActive(false);
         }
-        FillGaps();
-        onAnyRoomDestroyedEvent += FillGaps;
+    }
 
+    public void CalculateBounds()
+    {
         bounds = new Bounds(transform.position.NullZ(), size.ConvertTo3D());
+    }
+
+    public void Enable()
+    {
+        CalculateBounds();
+        gameObject.SetActive(true);
+        onAnyRoomDestroyedEvent += FillGaps;
+        FillGaps();
+    }
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+        onAnyRoomDestroyedEvent -= FillGaps;
+        gameObject.name = "spare in pool";
     }
 
     /// <summary>
