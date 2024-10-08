@@ -35,6 +35,8 @@ public class EnemyMotor : MonoBehaviour
 
         if (!isOnNavmesh) return;
 
+        transform.position = transform.position.WithZ(transform.position.y / 100f);
+
         float distanceToHeater = (transform.position - Scripts.Heater.transform.position).magnitude;
         float playerDistanceToHeater = (Scripts.Player.transform.position - Scripts.Heater.transform.position).magnitude;
 

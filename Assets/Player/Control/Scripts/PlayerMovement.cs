@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         gameObject.transform.position = gameObject.transform.position.ConvertTo2D() + velocity;
+        gameObject.transform.position = gameObject.transform.position.WithZ(gameObject.transform.position.y / 100f);
     }
 
     public void SetSpeed(float _speed)
