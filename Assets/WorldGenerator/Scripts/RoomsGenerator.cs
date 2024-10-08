@@ -1,15 +1,15 @@
-using JetBrains.Annotations;
 using NaughtyAttributes;
 using NavMeshPlus.Components;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomsGenerator : MonoBehaviour
 {
     [SerializeField] private bool isEnabled = true;
     [SerializeField] private List<Room> roomPrefabs;
+    private int roomPrefabNumber;
     [SerializeField] private int numberOfRooms = 40;
     [ShowNonSerializedField][ReadOnly]
     private int generatedAmount = 0;
@@ -42,6 +42,8 @@ public class RoomsGenerator : MonoBehaviour
     public void Init()
     {
         if (!isEnabled) return;
+
+        roomPrefabNumber = roomPrefabs.Count;
 
         InitNavMesh();
 
@@ -183,10 +185,10 @@ public class RoomsGenerator : MonoBehaviour
     {
         if (entrance.connectedEntrance != null) return null;
 
-        var rooms = roomPrefabs.Shuffle();
-
-        foreach (Room other in rooms)
+        int i = 0;
+        while (true)
         {
+            Room other = roomPrefabs.RandomElement();
             foreach (RoomEntrance otherEntrance in other.entrances)
             {
                 if (doNotRepeateParent && parent.prefabId == other.prefabId) continue; 
@@ -213,6 +215,8 @@ public class RoomsGenerator : MonoBehaviour
 
                 return newRoom;
             }
+            i++;
+            if (i > roomPrefabNumber - 1) break;
         }
 
         return null;
@@ -221,6 +225,7 @@ public class RoomsGenerator : MonoBehaviour
     private bool IsSpaceFree(Room referenceRoom, Vector2 position, int parentid)
     {
         referenceRoom.transform.position = position;
+        referenceRoom.bounds = new Bounds(position, referenceRoom.size.ConvertTo3D());
 
         foreach (var room in generatedRooms)
         {

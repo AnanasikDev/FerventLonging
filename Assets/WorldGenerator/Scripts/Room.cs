@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using NavMeshPlus.Components;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ public class Room : MonoBehaviour
     public List<RoomEntrance> entrances;
 
     public Vector2 size;
-    public Bounds bounds { get { return new Bounds(transform.position.NullZ(), size.ConvertTo3D()); } }
+    [ReadOnly] public Bounds bounds;
 
     [Tooltip("Areas where props, fuel and enemies will be spawned")] public Area[] fillinAreas;
 
@@ -63,6 +64,8 @@ public class Room : MonoBehaviour
         }
         FillGaps();
         onAnyRoomDestroyedEvent += FillGaps;
+
+        bounds = new Bounds(transform.position.NullZ(), size.ConvertTo3D());
     }
 
     /// <summary>

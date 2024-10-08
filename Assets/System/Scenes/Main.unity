@@ -11745,7 +11745,7 @@ MonoBehaviour:
   generatedRooms: []
   player: {fileID: 330084793}
   distanceGenerateThreshold: 30
-  distanceDestroyThreshold: 180
+  distanceDestroyThreshold: 55
   propsPrefabs:
   - {fileID: 7955088347265888358, guid: 87915513acd18784284622aa4fe52c36, type: 3}
   - {fileID: -5618845717457140290, guid: d2c16f8e19794914e8fb91d80e9af685, type: 3}
